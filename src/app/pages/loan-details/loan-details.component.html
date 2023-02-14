@@ -1,0 +1,104 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ loan.type.name | uppercase }}</mat-card-title>
+    <mat-card-subtitle>RM {{ loan.amount | number: '1.2-2' }} {{ 'common.label.open_bracket' | translate }}{{ durationString }}{{ 'common.label.close_bracket' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxFlex fxFlexFill fxLayout="column" fxLayoutGap="20px">
+      <div>
+        <mat-divider></mat-divider>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.applicant_name' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.applicantName }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.gender' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ (loan.gender.code === 'M' ? 'form.label.gender.male' : 'form.label.gender.female') | translate }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.identity_mykad_passport' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.idNo | string: 'mykad' }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'common.text.email' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.emailAddress }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.phone_number' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.phoneNumber }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.residential_address' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <ng-container *ngIf="loan.residentialAddress.line1">
+          <div fxFlex>{{ loan.residentialAddress.line1.concat(', ', loan.residentialAddress.postalCode, ' ', loan.residentialAddress.cityName, ', ', loan.residentialAddress.state.name, ', ', loan.residentialAddress.country.name) }}</div>
+        </ng-container>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.mailing_address' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <ng-container *ngIf="loan.mailingAddress.line1">
+          <div fxFlex>{{ loan.mailingAddress.line1.concat(', ', loan.mailingAddress.postalCode, ' ', loan.mailingAddress.cityName, ', ', loan.mailingAddress.state.name, ', ', loan.mailingAddress.country.name) }}</div>
+        </ng-container>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.business_type' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.businessType.name }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.company' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.companyName }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.occupation' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.occupation }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.annual_income' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.annualIncome ? 'RM '.concat((loan.annualIncome | number: '1.2-2')) : '-' }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.unclear_loan_short' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ (loan.haveUnclearLoan ? 'common.text.yes' : 'common.text.no') | translate }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start start" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.supporting_document' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>
+          <a mat-raised-button *ngFor="let document of loan.documents" [href]="document.url"><mat-icon>attach_file</mat-icon> {{ document.fileName }}</a>
+          <!-- <button mat-button>
+            <mat-icon>attach_file</mat-icon> payslip-2019.pdf
+          </button>
+          <button mat-button>
+            <mat-icon>attach_file</mat-icon> employment-letter.pdf
+          </button>
+          <button mat-button>
+            <mat-icon>attach_file</mat-icon> bank-statement.pdf
+          </button> -->
+        </div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start center" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'common.text.notes' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <div fxFlex>{{ loan.notes ? loan.notes : '-' }}</div>
+      </div>
+      <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start start" fxLayoutGap="20px">
+        <label fxFlex="20%" fxFlex.lt-sm="40%">{{ 'form.label.submit_to' | translate }}{{ 'common.text.semicolon' | translate }}</label>
+        <ng-container *ngIf="loan.loanProviderType.code === 'AGENT'; else notAgent">{{ loan.loanProviderType.name }}</ng-container>
+        <ng-template #notAgent>
+          <mat-chip-list>
+            <mat-chip *ngFor="let bank of loan.banks">{{ bank.name }}</mat-chip>
+          </mat-chip-list>
+          <!-- <div *ngIf="form.value.banks && form.value.banks.length > 0">
+            <mat-chip-list>
+              <mat-chip *ngFor="let bank of form.value.banks; let i = index" [removable]="true" (removed)="removeBank(i)">
+                {{ bank.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div> -->
+        </ng-template>
+      </div>
+    </div>
+  </mat-card-content>
+  <!-- <mat-card-actions style="text-align: center;">
+    <button mat-stroked-button>{{ isReadonly() ? 'Close' : 'Confirm & Submit' }}</button>
+  </mat-card-actions> -->
+</mat-card>

@@ -1,0 +1,9 @@
+.loading-container {
+    max-width: 300px;
+}
+
+.loading-container .loading-message {
+    color: white;
+    background-color: #F44336;
+    padding: 3px 10px;
+}

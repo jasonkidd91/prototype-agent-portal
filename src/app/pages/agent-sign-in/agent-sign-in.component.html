@@ -1,0 +1,26 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <div class="section agent-login-card">
+    <div class="agent-login-box" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="0px">
+      <div class="login-header"><strong>Agent Portal</strong></div>
+      <div class="login-body">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Key in Agent ID">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Key in Password">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="login-footer">
+        <button routerLink="/dashboard" mat-raised-button color="primary">LOGIN</button>
+      </div>
+    </div>
+  </div>
+</div>

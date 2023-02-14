@@ -1,0 +1,15 @@
+.wrapper .section-application { }
+.wrapper .section-application .application-card .card-content,
+.wrapper .section-application .application-card .accordion-content {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+}
+.wrapper .section-application .application-card .card-content { line-height: 1.5em; }
+.wrapper .section-application .application-card .card-title { font-size: calc(7px + 1vw); }
+.wrapper .section-application .application-card .mat-accordion .accordion-content { padding: 10px 0; }
+.wrapper .section-application .application-card .bank-list .status { font-style: italic; font-weight: bold; }
+.wrapper .section-application .application-card .bank-list .color-primary { color: var(--primary); }
+.wrapper .section-application .application-card .bank-list .color-warn { color: var(--warn); }
+.wrapper .section-application .application-card .bank-list h4,
+.wrapper .section-application .application-card .bank-list .status { font-size: calc(7px + 0.6vw); }

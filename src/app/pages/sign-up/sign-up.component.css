@@ -1,0 +1,19 @@
+.register-card > div {
+    /* border: 1px solid black; */
+}
+
+.register-card .extra-margin {
+    padding: 0 20%;
+}
+
+.register-card mat-checkbox {
+    font-size: 12px;
+}
+
+.register-card mat-checkbox a {
+    font-weight: bold;
+}
+
+.register-card .extra-margin mat-checkbox {
+    margin-left: 15%;
+}

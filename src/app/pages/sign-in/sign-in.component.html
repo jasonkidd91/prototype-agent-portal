@@ -1,0 +1,18 @@
+<div class="sign-in-container" fxFlexFill fxLayout fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="0">
+    <div class="container-left bg-primary" fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center" fxHide
+        fxShow.gt-sm="true" fxFlex="40%">
+        <div class="register-title">{{ 'page.sign_in.message.join_us' | translate }}</div>
+        <div><button mat-flat-button (click)="signUp()">{{ ('page.sign_in.btn.join_us' | translate) | uppercase }}</button></div>
+    </div>
+    <div class="container-right" fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center" fxFlex="60%">
+        <div class="sign-in-title">{{ 'page.sign_in.message.sign_in' | translate }}</div>
+        <input class="button-style1 input-sign-in" placeholder="{{ 'common.text.email_address' | translate }}" [(ngModel)]="email">
+        <input class="button-style1 input-sign-in" placeholder="{{ 'common.text.password' | translate }}" type="password" [(ngModel)]="password">
+        <div style="width: 100%">
+            <span class="float-left font-small"><!-- Remember Me --></span>
+            <span class="float-right font-small"><a (click)="forgotPassword()" class="forgot-password-link">{{ 'page.sign_in.forgot_password' | translate }}</a></span>
+        </div>
+        <div><button class="button-login bg-primary" mat-stroked-button (click)="signIn()">{{ ('common.text.login' | translate) | uppercase }}</button></div>
+        <div fxShow fxHide.gt-sm="true" class="font-small">{{ 'page.sign_in.message.no_account' | translate }} <a (click)="signUp()" class="register-link text-accent">{{ 'page.sign_in.btn.register' | translate }}</a></div>
+    </div>
+</div>

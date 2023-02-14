@@ -1,0 +1,60 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header page="page.calculator.name" currentPage="page.calculator.sub_name"></app-sub-page-header>
+  <div class="section calculator-card">
+    <!-- <h1 class="section-title" ngClass.lt-sm="section-title-responsive">LOAN CALCULATOR</h1> -->
+    <!-- <mat-toolbar color="primary">Loan Calculator</mat-toolbar> -->
+    <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start stretch" fxLayoutGap="0px">
+      <div fxFlex="70%" fxFlex.sm="55%">
+        <mat-card>
+          <mat-card-content>
+            <h2 class="calculator-title text-primary">Loan Amount</h2>
+            <mat-slider thumbLabel [(ngModel)]="amount" tickInterval="1000" min="100000" step="10000" max="1000000">
+            </mat-slider>
+            <span>
+              <sws-input-dialog dialogTitle="Input Loan Amount" [customContent]="true"
+                (onReturn)="amount = ($event ? $event : amount)">
+                <mat-chip-list>
+                  <mat-chip color="accent" selected>RM {{ amount | number:'1.2-2'}}</mat-chip>
+                </mat-chip-list>
+              </sws-input-dialog>
+            </span>
+            <br />
+            <h2 class="calculator-title text-primary">Loan Term</h2>
+            <mat-slider thumbLabel [(ngModel)]="period" tickInterval="1000" min="1" step="1" max="100">
+            </mat-slider>
+            <span>
+              <sws-input-dialog dialogTitle="Input Loan Term" [customContent]="true"
+                (onReturn)="period = ($event ? $event : period)">
+                <mat-chip-list>
+                  <mat-chip color="accent" selected>{{ period }} Years</mat-chip>
+                </mat-chip-list>
+              </sws-input-dialog>
+            </span>
+            <br />
+            <h2 class="calculator-title text-primary">Interest Rate</h2>
+            <mat-slider thumbLabel [(ngModel)]="interest" tickInterval="1000" min="5" step="0.01" max="15">
+            </mat-slider>
+            <span>
+              <sws-input-dialog dialogTitle="Input Interest Rate" [customContent]="true"
+                (onReturn)="interest = ($event ? $event : interest)">
+                <mat-chip-list>
+                  <mat-chip color="accent" selected>{{ interest | number:'1.2-2' }} %</mat-chip>
+                </mat-chip-list>
+              </sws-input-dialog>
+            </span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div fxFlex class="calculator-result-section text-center bg-primary">
+        <h2>Total Loan Amount</h2>
+        <span>RM {{ amount | number:'1.2-2'}}</span>
+        <h2>Total Interest Payable</h2>
+        <span>RM {{ (amount * interest / 100 * period) | number:'1.2-2' }}</span>
+        <h2>Total Loan Amount + Interest</h2>
+        <span>RM {{ (amount + (amount * interest / 100 * period) ) | number:'1.2-2' }}</span>
+        <h2>Installment Per Month</h2>
+        <span>RM {{ (amount + (amount * interest / 100 * period)) / (period * 12) | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

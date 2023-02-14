@@ -1,0 +1,20 @@
+.offer-card .card-content {
+    padding: 20px 10px;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+}
+.offer-card .card-content .old-value { font-style: italic; text-decoration: line-through; }
+.offer-card .card-content .new-value { font-weight: 600; color: var(--primary); }
+.offer-card .card-content #note-textarea:focus { outline: 0; }
+.offer-card .card-content #note-textarea {
+    height:auto;
+    max-width:100%;
+    width:80%;
+    background:#fff;
+    border-radius:3px;
+    line-height:2em;
+    border:none;
+    box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+    padding:30px;
+}

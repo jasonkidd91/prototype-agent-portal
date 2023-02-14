@@ -1,0 +1,89 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header page="page.packages.name" currentPage="page.packages.sub_name"></app-sub-page-header>
+  <div class="section packages-list-card">
+    <div class="packages-list-wrapper" fxLayoutAlign="start stretch" fxLayout="column" fxLayoutGap="0px">
+      <div class="list-header" fxLayoutAlign="start stretch" fxLayout="column" fxLayoutGap="0px">
+        <div class="alternative-wrapper" fxFlex>
+          <div class="alternative-content" ngClass.lt-sm="accordion">
+            <h4 class="accrodion-button" (click)="showContent = !showContent;">{{ 'page.package_list.label.title' | translate }}</h4>
+            <div class="accrodion-wrapper" [ngClass]="showContent ? '' : 'hide'">
+              {{ 'page.package_list.label.message01.title' | translate }}
+              <div class="custom-order-list">
+                <div class="list-item">{{ 'page.package_list.label.message01.message01' | translate }}</div>
+                <div class="list-item">{{ 'page.package_list.label.message01.message02' | translate }}</div>
+              </div>
+              <button mat-button color="warn" (click)="applyLoan()">{{ 'page.package_list.label.lets_go' | translate }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="btn-wrapper" fxFlex="70%" fxLayoutAlign="start stretch" fxLayout="column" fxLayoutGap="0px">
+          <div fxLayoutAlign="start center" fxLayout="row wrap" fxLayoutGap="0px">
+            <div class="btn-container" *ngFor="let loan of loanType$"><button mat-raised-button
+                [color]="selectedLoan == loan.code ? 'accent' : ''"
+                (click)="onLoanTypeSelect(loan.code)">{{ loan.name }}</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="list-result">
+        <div class="package-card-wrapper">
+          <div class="no-result text-center" *ngIf="!isLoading && loanList$.length <= 0">{{ 'common.label.no_result' | translate }}</div>
+          <div fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="15px">
+            <ng-container *ngFor="let loan of loanList$">
+              <ng-container *ngTemplateOutlet="packageCard; context: { $implicit: loan } "></ng-container>
+            </ng-container>
+            <button mat-raised-button color="accent" *ngIf="!isLoading && loanList$.length > 0"
+              (click)="loadMore()">Load More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #packageCard let-data>
+  <mat-card class="package-card">
+    <div class="ribbon ribbon-top-right" *ngIf="data.bestRate"><span>{{ 'page.package_list.label.best_rate' | translate }}</span></div>
+    <mat-card-header style="border-bottom: 1px solid #ECECEC;">
+      <mat-card-title>{{ data.name }}{{ 'common.label.open_bracket' | translate }}<span *ngIf="data.duration.year && data.duration.year > 0">{{ data.duration.year }}{{ 'form.label.year' | translate }}</span><span *ngIf="data.duration.month && data.duration.month > 0">{{ data.duration.month }}{{ 'form.label.year' | translate }}</span>{{ 'common.label.close_bracket' | translate }}</mat-card-title>
+      <mat-card-subtitle *ngIf="data.type">{{ data.type.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <br />
+      <div class="package-card-content" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center stretch" fxLayout="row"
+        fxLayout.lt-sm="column" fxLayoutGap="15px">
+        <div style="place-self: center;">
+          <div class="image-wrapper">
+            <img [src]="data.imageUrl">
+          </div>
+        </div>
+        <div fxFlex>
+          <div class="loan-info-wrapper" fxLayoutAlign="center stretch" fxLayout="row" fxLayoutGap="15px">
+            <div fxFlex="33%">
+              <div class="info-title">{{ data.interestRate }}%</div>
+              <span class="info-subtitle">{{ 'page.package_list.label.interest_rate' | translate }}</span>
+            </div>
+            <div fxFlex="33%">
+              <div class="info-title">{{ 'common.label.myr' | translate }} {{ data.loanAmount | number:'1.2' }}</div>
+              <span class="info-subtitle">{{ 'common.label.loan_amount' | translate }}</span>
+            </div>
+            <div fxFlex="33%">
+              <div class="info-title">{{ 'common.label.myr' | translate }} {{ data.monthlyInstallmentAmount | number:'1.2' }}</div>
+              <span class="info-subtitle">{{ 'page.package_list.label.per_month' | translate }}</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="btn-wrapper" fxLayoutAlign="center center" fxLayout="column" fxLayout.lt-sm="row"
+            fxLayoutGap="15px">
+            <div><button mat-raised-button color="accent" (click)="packageDetails(data)">{{ 'common.label.view' | translate | uppercase }}</button></div>
+            <div><button mat-raised-button color="warn" (click)="applyLoan(data)">{{ 'common.label.apply' | translate | uppercase }}</button></div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <ng-container *ngIf="data.translations && data.translations[0] && data.translations[0].notes">
+      <mat-card-actions style="border-top: 1px solid #ECECEC;">
+        <div class="package-card-description">{{ data.translations[0].notes }}</div>
+      </mat-card-actions>
+    </ng-container>
+  </mat-card>
+</ng-template>

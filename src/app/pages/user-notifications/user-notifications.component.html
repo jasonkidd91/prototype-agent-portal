@@ -1,0 +1,47 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <div class="dashboard-bg">
+    <!-- <img class="avatar" src="https://picsum.photos/id/1005/5760/3840" /> -->
+    <div>
+      <h1>{{ date$ | date:'EEEE' }}</h1>
+      <h3>{{ date$ | date:'longDate' }}</h3>
+      <h2>Hi Jason, How are you today?</h2>
+    </div>
+  </div>
+
+  <div class="section">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+    type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+    Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
+    Lorem Ipsum.
+  </div>
+
+  <!-- <div class="section section-notifications">
+    <mat-toolbar color="accent">
+      <mat-icon>all_inbox</mat-icon>&nbsp;Inbox
+    </mat-toolbar>
+    <div class="text-center" *ngIf="!isLoading && (!data$ || data$.length <= 0)">
+      <p>{{ 'No Message' | translate }}</p>
+    </div>
+    <mat-accordion *ngIf="data$ && data$.length > 0"
+      class="notification-accordion accordian-hover-primary accordian-active-primary accordian-aligned">
+      <mat-expansion-panel *ngFor="let data of data$" [class.new]="!data.view" (click)="viewMessage(data)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ data.dt | date:'short' }}
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon>mail</mat-icon>&nbsp;{{ data.title }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>{{ data.message }}</p>
+        <mat-action-row>
+          <button mat-icon-button color="warn" (click)="deleteMessage(data)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div> -->
+</div>

@@ -1,0 +1,155 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$default-theme-primary: mat-palette($mat-teal, 500, A600, A700);
+$default-theme-accent: mat-palette($mat-indigo);
+
+// The warn palette is optional (defaults to red).
+$default-theme-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$default-theme: mat-light-theme($default-theme-primary, $default-theme-accent, $default-theme-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($default-theme);
+
+@mixin theme-color-grabber($default-theme) {
+  // Parse the theme and create variables for each color in the pallete
+  $primary: map-get($default-theme, primary);
+  $accent: map-get($default-theme, accent);
+  $warn: map-get($default-theme, warn);
+
+  // Css Variable
+  :root {
+    --primary: #009688;
+    --accent: #3f51b5;
+    --warn: #f44336;
+  }
+
+  // Create theme specfic styles
+  .bg-primary {
+    background-color: mat-color($primary);
+  }
+
+  .bg-accent {
+    background-color: mat-color($accent);
+  }
+
+  .bg-warn {
+    background-color: mat-color($warn);
+  }
+
+  .text-primary {
+    color: mat-color($primary);
+  }
+
+  .text-accent {
+    color: mat-color($accent);
+  }
+
+  .text-warn {
+    color: mat-color($warn);
+  }
+
+  .mat-focused .mat-form-field-required-marker,
+  .mat-form-field-required-marker {
+    color: mat-color($warn);
+  }
+
+  .mat-form-field-invalid mat-icon {
+    color: mat-color($warn);
+  }
+
+  .section-title {
+    background-color: mat-color($primary);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-top-color: mat-color($primary);
+      border-bottom: 0;
+      margin-left: -15px;
+      margin-bottom: -15px;
+    }
+  }
+
+  .accordian-hover-primary .mat-expansion-panel:not(.mat-expanded):hover > .mat-expansion-panel-header {
+    background-color: var(--primary);
+  }
+  .accordian-hover-primary .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-panel-header-title,
+  .accordian-hover-primary .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-panel-header-description,
+  .accordian-hover-primary .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-indicator::after {
+    color: white !important;
+  }
+
+  .accordian-active-primary .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
+    background-color: mat-color($primary);
+  }
+  .accordian-active-primary .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-panel-header-title,
+  .accordian-active-primary .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-panel-header-description,
+  .accordian-active-primary .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-indicator::after {
+    color: white !important;
+  }
+
+  .accordian-hover-accent .mat-expansion-panel:not(.mat-expanded):hover > .mat-expansion-panel-header {
+    background-color: var(--accent);
+  }
+  .accordian-hover-accent .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-panel-header-title,
+  .accordian-hover-accent .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-panel-header-description,
+  .accordian-hover-accent .mat-expansion-panel:not(.mat-expanded):hover>.mat-expansion-panel-header .mat-expansion-indicator::after {
+    color: white;
+  }
+
+  .accordian-active-accent .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
+    background-color: mat-color($accent);
+  }
+  .accordian-active-accent .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-panel-header-title,
+  .accordian-active-accent .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-panel-header-description,
+  .accordian-active-accent .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-indicator::after {
+    color: white !important;
+  }
+
+  [class*="accordian-aligned"] .mat-expansion-panel-header-title,
+  [class*="accordian-aligned"] .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  [class*="accordian-aligned"] .mat-expansion-panel-header-description {
+    align-items: center;
+  }
+
+  .accordian-aligned-between .mat-expansion-panel-header-description {
+    justify-content: space-between;
+  }
+
+  .mat-row-clickable {
+    &:hover {
+      cursor: pointer; background-color: mat-color($accent);
+      .mat-cell { color: white; }
+    }
+    &:active { background-color: darken(mat-color($accent), 20); }    
+  }
+
+  .mock-mat-form-field-outline {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    margin-bottom: 20px !important;
+  }
+}
+
+@include theme-color-grabber($default-theme);

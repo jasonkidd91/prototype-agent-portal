@@ -1,0 +1,215 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header page="page.sign_up.name" currentPage="page.sign_up.sub_name"></app-sub-page-header>
+  <form [formGroup]="form" novalidate class="section register-card" (ngSubmit)="signUp($event)">
+    <h1 class="section-title" ngClass.lt-sm="section-title-responsive">
+      {{ 'page.sign_up.sub_name' | translate | uppercase }}</h1>
+    <!-- Start of Form -->
+    <div ngClass.gt-sm="extra-margin">
+      <!-- Name -->
+      <div formGroupName="name">
+        <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+          <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+            {{ 'form.label.name' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+          <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>{{ 'form.label.full_name' | translate }}</mat-label>
+              <input #full maxlength="255" matInput placeholder="" formControlName="full" required>
+              <mat-hint align="end">{{ full.value.length }} / 255</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+          <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right"></div>
+          <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>{{ 'form.label.display_name' | translate }}</mat-label>
+              <input #display maxlength="100" matInput placeholder="" formControlName="display" required>
+              <mat-hint align="end">{{ display.value.length }} / 100</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!-- Gender -->
+      <div formGroupName="gender" fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <div fxFlex="20%" fxFlex.sm="10%" ngClass.gt-xs="text-right">
+          {{ 'form.label.gender' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+        <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+          <mat-radio-group aria-label="Select an option" formControlName="code">
+            <mat-radio-button value="M">{{ 'form.label.gender.male' | translate }}</mat-radio-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button value="F">{{ 'form.label.gender.female' | translate }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <br />
+      <!-- Identity -->
+      <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+          {{ 'form.label.identity' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+        <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.identity_mykad_passport' | translate }}</mat-label>
+            <input #idNo maxlength="14" matInput placeholder="" formControlName="idNo" mask='000000-00-0000' required>
+            <mat-icon matSuffix>perm_identity</mat-icon>
+            <mat-hint align="end">{{ idNo.value.length }} / 14</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div formArrayName="occupations">
+        <div formGroupName="0">
+          <!-- Occupation -->
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              {{ 'form.label.occupation' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'form.label.occupation' | translate }}</mat-label>
+                <input #name maxlength="255" matInput placeholder="" formControlName="name">
+                <mat-icon matSuffix>work</mat-icon>
+                <mat-hint align="end">{{ name.value.length }} / 255</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- Company -->
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              {{ 'form.label.company' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'form.label.company_name' | translate }}</mat-label>
+                <input #companyName maxlength="255" matInput placeholder="" formControlName="companyName">
+                <mat-icon matSuffix>business</mat-icon>
+                <mat-hint align="end">{{ companyName.value.length }} / 255</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div formArrayName="phoneNumbers">
+        <div formGroupName="0">
+          <!-- Phone -->
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              {{ 'form.label.phone' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+                <mat-form-field appearance="outline" formGroupName="country" fxFlex="35%">
+                  <mat-label>{{ 'form.label.calling_code' | translate }}</mat-label>
+                  <mat-select formControlName="code">
+                    <mat-option value="MY">+60</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'form.label.phone_number' | translate }}</mat-label>
+                <input #phoneNumber maxlength="15" matInput placeholder="" formControlName="phoneNumber" [onlyDigit]="{ allowPrefixZero: true }">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-hint align="end">{{ phoneNumber.value.length }} / 15</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="emails">
+        <div formGroupName="0">
+          <!-- Email -->
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              {{ 'common.text.email' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'common.text.email_address' | translate }}</mat-label>
+                <input matInput #emailAddress type="email" placeholder="" formControlName="emailAddress" maxlength="255" required>
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-hint align="end">{{ emailAddress.value.length }} / 255</mat-hint>
+                <mat-error *ngIf="form.controls['emails'].controls[0].controls['emailAddress'].hasError('in_use')">
+                  {{ 'validation.message.in_use_by_account' | translate }}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="password">
+        <!-- Password -->
+        <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+          <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+            {{ 'form.label.password' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+          <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" fxFlex="50%">
+              <mat-label>{{ 'form.label.password' | translate }}</mat-label>
+              <input #new maxlength="16" matInput type="password" placeholder="" formControlName="new" required>
+              <mat-hint align="end">{{ new.value.length }} / 16</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>{{ 'form.label.confirm_password' | translate }}</mat-label>
+              <input #confirm maxlength="16" matInput type="password" placeholder="" formControlName="confirm" required>
+              <mat-hint align="end">{{ confirm.value.length }} / 16</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="addresses">
+        <div formGroupName="0">
+          <!-- Address -->
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              {{ 'form.label.address' | translate }}{{ 'common.text.semicolon' | translate }}</div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'form.label.street' | translate }}</mat-label>
+                <input #line1 maxlength="100" matInput placeholder="" formControlName="line1">
+                <mat-hint align="end">{{ line1.value.length }} / 100</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+              <!-- Label -->
+            </div>
+            <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+              <mat-form-field appearance="outline" fxFlex="50%">
+                <mat-label>{{ 'form.label.postal_code' | translate }}</mat-label>
+                <input #postalCode minlength="5" maxlength="5" matInput placeholder="" formControlName="postalCode" [required]="conditionalRequired(form.get('addresses.0.line1'))" [onlyDigit]="{ allowPrefixZero: true }">
+                <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>{{ 'form.label.city' | translate }}</mat-label>
+                <input #cityName maxlength="100" matInput placeholder="" formControlName="cityName" [required]="conditionalRequired(form.get('addresses.0.line1'))">
+                <mat-hint align="end">{{ cityName.value.length }} / 100</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div formGroupName="state">
+            <div fxFlexFill fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+              <div fxHide.lt-sm="true" fxFlex="20%" fxFlex.sm="10%" class="text-right">
+                <!-- Label -->
+              </div>
+              <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+                <mat-form-field appearance="outline" fxFlex="50%">
+                  <mat-label>{{ 'form.label.state' | translate }}</mat-label>
+                  <mat-select formControlName="code" [required]="conditionalRequired(form.get('addresses.0.line1'))">
+                    <mat-option *ngFor="let state of $state | async" value="{{ state.code }}">{{ state.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field formGroupName="country" appearance="outline" fxFlex>
+                  <mat-label>{{ 'form.label.country' | translate }}</mat-label>
+                  <mat-select formControlName="code">
+                    <mat-option value="MY">Malaysia</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Rest of the items -->
+      <div fxFlexFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <mat-checkbox formControlName="agreeTNC">
+          {{ 'page.sign_up.label.checkbox.message01' | translate }} <a
+            href="#">{{ 'page.sign_up.label.checkbox.message02' | translate }}</a>
+        </mat-checkbox>
+        <button mat-stroked-button [disabled]="form.invalid || isSubmitted" type="submit">{{ 'page.sign_up.name' | translate }}</button>
+        <br />
+      </div>
+    </div> <!-- End of Form -->
+  </form>
+</div>

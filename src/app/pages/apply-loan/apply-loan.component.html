@@ -1,0 +1,396 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header page="page.loans.name" currentPage="page.loans.sub_name"></app-sub-page-header>
+  <div class="section loan-application-card">
+    <!-- <h1 class="section-title" ngClass.lt-sm="section-title-responsive">Loan Application</h1> -->
+    <div fxFlexFill fxLayoutAlign="center stretch" fxLayout="column">
+      <mat-vertical-stepper linear="false" #stepper>
+        <!-- Step 1 - Choose Loan-->
+        <mat-step>
+          <ng-template matStepLabel>{{ 'page.apply_loan.label.step01' | translate }}</ng-template>
+          <ng-container *ngTemplateOutlet="loanType"></ng-container>
+        </mat-step>
+        <!-- Step 2 - Fill in Required Information -->
+        <mat-step>
+          <ng-template matStepLabel>{{ 'page.apply_loan.label.step02' | translate }}</ng-template>
+          <ng-container *ngTemplateOutlet="applicationForm"></ng-container>
+        </mat-step>
+        <!-- Step 3 - Choose Audiences -->
+        <mat-step>
+          <ng-template matStepLabel>{{ 'page.apply_loan.label.step03' | translate }}</ng-template>
+          <ng-container *ngTemplateOutlet="selectAudiences"></ng-container>
+        </mat-step>
+        <!-- Step 4 - Confirm & Submit Application -->
+        <mat-step>
+          <ng-template matStepLabel>{{ 'page.apply_loan.label.step04' | translate }}</ng-template>
+          <ng-container *ngTemplateOutlet="confirmApplicationForm"></ng-container>
+          <!-- <div fxFlex fxFlexFill fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <mat-icon>check_circle</mat-icon>
+            <span>Your Application has been submitted for review, kindly be patient.</span>
+          </div> -->
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+  </div>
+</div>
+<form [formGroup]="form" novalidate>
+<ng-template #loanType>
+  <!-- <form [formGroup]="form" novalidate> -->
+    <div fxFlexFill fxLayout="column" fxLayoutAlign="center start">
+      <div class="package-type-wrapper">
+        <div *ngIf="package">
+          <button mat-raised-button color="accent" (click)="packageDetails()">{{ 'page.apply_loan.label.package' | translate }}{{ 'common.label.space' | translate }}{{ packageName }}</button>
+          <div class="notes">{{ 'page.apply_loan.label.package_note_01' | translate }}<a href="javascript:void(0)" (click)="deselectPackage()">{{ 'page.apply_loan.label.package_note_02' | translate | uppercase }}</a>{{ 'page.apply_loan.label.package_note_03' | translate }}</div>
+        </div>
+        <div class="notes" *ngIf="!package">
+          {{ 'page.apply_loan.step01.title.message01' | translate }}<a href="javascript:void(0)"
+            (click)="viewPackages()">{{ 'page.apply_loan.step01.title.message02' | translate }}</a>{{ 'page.apply_loan.step01.title.message03' | translate }}
+        </div>
+      </div> <br />
+      <mat-form-field appearance="outline" formGroupName="type">
+        <mat-label>{{ 'form.label.loan_type' | translate }}</mat-label>
+        <!-- <mat-select matNativeControl [disabled]="package" formControlName="code"> -->
+        <mat-select matNativeControl formControlName="code">
+          <ng-container *ngIf="loanTypes">
+            <mat-option *ngFor="let loanType of loanTypes" value="{{ loanType.code }}">{{ loanType.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'form.label.loan_amount' | translate }}</mat-label>
+        <!-- <input matInput placeholder="" [disabled]="package" formControlName="amount" [onlyDigit]="{ allowDecimal: true, decimalPlace: 2 }"> -->
+        <input matInput placeholder="" formControlName="amount" [onlyDigit]="{ allowDecimal: true, decimalPlace: 2 }">
+      </mat-form-field>
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>{{ 'form.label.loan_term' | translate }}</mat-label>
+        <mat-select matNativeControl [disabled]="package" #paymentTerm (selectionChange)="onPaymentTermChange(paymentTerm.value)">
+          <ng-container *ngIf="paymentTerms">
+            <mat-option *ngFor="let paymentTerm of paymentTerms" value="{{ paymentTerm.duration }}">{{ paymentTerm.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field> -->
+      <!-- <div fxLayout="row" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'form.label.loan_term' | translate }}</mat-label>
+          <mat-select matNativeControl [disabled]="package" #paymentTerm (selectionChange)="onPaymentTermChange(paymentTerm.value)">
+            <ng-container *ngIf="paymentTerms">
+              <mat-option *ngFor="let paymentTerm of paymentTerms" value="{{ paymentTerm.duration }}">{{ paymentTerm.name }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+      <!-- <div fxLayout="row wrap" fxflex fxFlexFill fxLayoutAlign="space-between center" fxLayoutGap="20%"> -->
+      <ng-container *ngIf="!package">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'form.label.loan_term' | translate }}</mat-label>
+          <!-- <mat-select matNativeControl [disabled]="package" #paymentTerm (selectionChange)="onPaymentTermChange(paymentTerm.value)" formGroupName="duration"> -->
+          <mat-select matNativeControl #paymentTerm (selectionChange)="onPaymentTermChange(paymentTerm.value)" formGroupName="duration">
+            <ng-container *ngIf="paymentTerms">
+              <mat-option *ngFor="let paymentTerm of paymentTerms" [value]="paymentTerm.duration">{{ paymentTerm.name }}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="showDurationForm || package">
+        <fieldset class="mock-mat-form-field-outline" fxflex fxFlexFill fxLayout="row"
+          fxLayoutAlign="space-between start">
+          <!-- <fieldset class="mat-form-field-appearance-outline mat-form-field-appearance-outline" fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="space-between start"> -->
+          <legend>{{ 'form.label.duration' | translate }}</legend>
+          <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="space-between center" formGroupName="duration">
+            <mat-form-field appearance="outline" fxFlex="49%">
+              <mat-label>{{ 'form.label.year' | translate }}</mat-label>
+              <!-- <input matInput placeholder="" [disabled]="package" [required]="showDurationForm && !form.get('duration.month').value" formControlName="year" onlyDigit> -->
+              <input matInput placeholder="" [required]="showDurationForm && !form.get('duration.month').value" formControlName="year" onlyDigit>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="49%">
+              <mat-label>{{ 'form.label.month' | translate }}</mat-label>
+              <!-- <input matInput placeholder="" [disabled]="package" [required]="showDurationForm && !form.get('duration.year').value" formControlName="month" onlyDigit> -->
+              <input matInput placeholder="" [required]="showDurationForm && !form.get('duration.year').value" formControlName="month" onlyDigit>
+            </mat-form-field>
+          </div>
+        </fieldset>
+      </ng-container>
+      <!-- </div> -->
+      <!-- <ng-container *ngIf="showDurationForm">
+        <div fxLayout="row wrap" fxflex>
+          <mat-form-field appearance="outline" fxflex>
+            <mat-label>{{ 'form.label.loan_amount' | translate }}</mat-label>
+            <input matInput placeholder="" [disabled]="package" formControlName="yearDuration">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxflex>
+            <mat-label>{{ 'form.label.loan_amount' | translate }}</mat-label>
+            <input matInput placeholder="" [disabled]="package" formControlName="monthDuration">
+          </mat-form-field>
+        </div>
+      </ng-container> -->
+      <!-- <ng-container *ngIf="showDurationForm">
+        <div fxFlex fxFlexFill fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-form-field appearance="outline" fxFlex="48%">
+            <mat-label>{{ 'form.label.loan_amount' | translate }}</mat-label>
+            <input matInput placeholder="" [disabled]="package" formControlName="yearDuration">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'form.label.loan_amount' | translate }}</mat-label>
+            <input matInput placeholder="" [disabled]="package" formControlName="monthDuration">
+          </mat-form-field>
+        </div>
+      </ng-container> -->
+    </div>
+  <!-- </form> -->
+</ng-template>
+<ng-template #applicationForm>
+  <!-- <form [formGroup]="form.step02" novalidate> -->
+    <div ngClass.gt-sm="extra-margin" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0px">
+      <!-- Gender -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px" formGroupName="gender">
+        {{ 'form.label.gender' | translate }}{{ 'common.text.semicolon' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-group aria-label="Select an option" formControlName="code">
+          <mat-radio-button class="padding-right-50px" value="M">{{ 'form.label.gender.male' | translate }}</mat-radio-button>
+          <mat-radio-button value="F">{{ 'form.label.gender.female' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <br />
+      <!-- Application Name -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'form.label.applicant_name' | translate }}</mat-label>
+          <input matInput placeholder="" formControlName="applicantName" maxlength="255" #applicantName>
+          <mat-hint align="end">{{ applicantName.value.length }} / 255</mat-hint>
+        </mat-form-field>
+      </div>
+      <!-- Identity & Contact -->
+      <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px"
+        fxLayoutGap.lt-sm="0px">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'form.label.identity_mykad_passport' | translate }}</mat-label>
+          <input #idNo maxlength="14" matInput placeholder="" formControlName="idNo" mask='000000-00-0000'>
+          <mat-hint align="end">{{ idNo.value.length }} / 14</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'form.label.phone_number' | translate }}</mat-label>
+          <input #phoneNumber maxlength="15" matInput placeholder="" formControlName="phoneNumber" [onlyDigit]="{ isPhoneNumber: true }">
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-hint align="end">{{ phoneNumber.value.length }} / 15</mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'common.text.email_address' | translate }}</mat-label>
+          <input matInput #emailAddress type="email" placeholder="" formControlName="emailAddress" maxlength="255">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint align="end">{{ emailAddress.value.length }} / 255</mat-hint>
+        </mat-form-field>
+      </div>
+      <!-- Business Type -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px" formGroupName="businessType">
+        <mat-form-field appearance="outline" fxFlex="100%">
+          <mat-label>{{ 'form.label.business_type' | translate }}</mat-label>
+          <mat-select matNativeControl formControlName="code">
+            <ng-container *ngIf="businessTypes">
+              <mat-option *ngFor="let businessType of businessTypes" value="{{ businessType.code }}">
+                {{ businessType.name }}</mat-option>
+            </ng-container>
+            <!-- <mat-option value="option2">Employee</mat-option>
+            <mat-option value="option1">Self Employed</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- Business Name -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex="100%">
+          <mat-label>{{ 'form.label.company' | translate }}</mat-label>
+          <input matInput placeholder="" #companyName maxlength="255" formControlName="companyName">
+          <mat-hint align="end">{{ companyName.value.length }} / 255</mat-hint>
+        </mat-form-field>
+      </div>
+      <!-- Annual Income & Occupation -->
+      <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px"
+        fxLayoutGap.lt-sm="0px">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'form.label.occupation' | translate }}</mat-label>
+          <input matInput placeholder="" formControlName="occupation" #occupation maxlength="255">
+          <mat-hint align="end">{{ occupation.value.length }} / 255</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ 'form.label.annual_income' | translate }}</mat-label>
+          <input matInput placeholder="" [onlyDigit]="{ allowDecimal: true, decimalPlace: 2 }" formControlName="annualIncome">
+        </mat-form-field>
+      </div>
+      <fieldset class="mock-mat-form-field-outline" formGroupName="residentialAddress">
+        <legend>{{ 'form.label.residential_address' | translate }}</legend>
+        <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+          <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-label>{{ 'form.label.street' | translate }}</mat-label>
+            <input #line1 maxlength="100" matInput placeholder="" formControlName="line1">
+            <mat-hint align="end">{{ line1.value.length }} / 100</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.postal_code' | translate }}</mat-label>
+            <input #postalCode minlength="5" maxlength="5" matInput placeholder="" formControlName="postalCode" [onlyDigit]="{ allowPrefixZero: true }">
+            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.city' | translate }}</mat-label>
+            <input #cityName maxlength="100" matInput placeholder="" formControlName="cityName">
+            <mat-hint align="end">{{ cityName.value.length }} / 100</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="outline" fxFlex  formGroupName="state">
+            <mat-label>{{ 'form.label.state' | translate }}</mat-label>
+            <mat-select formControlName="code">
+              <mat-option *ngFor="let state of states" value="{{ state.code }}">{{ state.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field formGroupName="country" appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.country' | translate }}</mat-label>
+            <mat-select formControlName="code">
+              <mat-option value="MY">Malaysia</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </fieldset>
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-checkbox formControlName="sameAddress">{{ 'form.label.check_box.same_address' | translate }}</mat-checkbox>
+      </div>
+      <fieldset class="mock-mat-form-field-outline" formGroupName="mailingAddress">
+        <legend>{{ 'form.label.mailing_address' | translate }}</legend>
+        <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+          <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-label>{{ 'form.label.street' | translate }}</mat-label>
+            <input #line1 maxlength="100" matInput placeholder="" formControlName="line1">
+            <mat-hint align="end">{{ line1.value.length }} / 100</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.postal_code' | translate }}</mat-label>
+            <input #postalCode minlength="5" maxlength="5" matInput placeholder="" formControlName="postalCode" [onlyDigit]="{ allowPrefixZero: true }">
+            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.city' | translate }}</mat-label>
+            <input #cityName maxlength="100" matInput placeholder="" formControlName="cityName">
+            <mat-hint align="end">{{ cityName.value.length }} / 100</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex fxFlexFill fxLayout fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="outline" fxFlex  formGroupName="state">
+            <mat-label>{{ 'form.label.state' | translate }}</mat-label>
+            <mat-select formControlName="code">
+              <mat-option *ngFor="let state of states" value="{{ state.code }}">{{ state.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field formGroupName="country" appearance="outline" fxFlex>
+            <mat-label>{{ 'form.label.country' | translate }}</mat-label>
+            <mat-select formControlName="code">
+              <mat-option value="MY">Malaysia</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </fieldset>
+      <!-- Having Loan? -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        {{ 'form.label.unclear_loan' | translate }}{{ 'common.text.semicolon' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-group aria-label="Select an option" formControlName="haveUnclearLoan">
+          <mat-radio-button [value]="true">{{ 'common.text.yes' | translate }}</mat-radio-button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-radio-button [value]="false">{{ 'common.text.no' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <br />
+      <!-- Supporting Documents -->
+      <fieldset class="mock-mat-form-field-outline">
+        <legend>{{ 'form.label.supporting_document' | translate }}</legend>
+        <div fxFlex fxFlexFill fxLayout fxLayoutAlign="start start" fxLayoutGap="20px" formArrayName="documents">
+          <mat-chip-list>
+            <mat-chip *ngFor="let documentFormGroup of documentFormArray.controls; let i = index;" [removable]="true" (removed)="removeFile(i)" [formGroupName]="i">
+              <a style="text-decoration: none; color: inherit;" [href]="documentFormGroup.value.url"><mat-icon>attach_file</mat-icon>{{ documentFormGroup.value.fileName }}</a>
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <!-- <ng-container *ngIf="documentFormArray.value.length > 0"> -->
+          <!-- <a mat-raised-button *ngFor="let documentFormGroup of documentFormArray.controls; let i = index;" [formGroupName]="i" [href]="documentFormGroup.value.url"><mat-icon>attach_file</mat-icon>{{ documentFormGroup.value.fileName }}</a> -->
+          <!-- <button mat-button *ngFor="let documentFormGroup of documentFormArray.controls; let i = index;" [formGroupName]="i">
+            <mat-icon>attach_file</mat-icon> {{ documentFormGroup.value.name }}
+          </button> -->
+          <!-- </ng-container> -->
+          <button mat-stroked-button (click)="uploader.click()">
+            <mat-icon>add</mat-icon> {{ 'form.label.upload_document' | translate }}
+          </button>
+        </div>
+        <div class="btn-support-hint">{{ 'common.text.asterisk' | translate }}{{ 'form.label.upload_document_remark' | translate }}</div>
+        <input #fileUploadInput hidden type="file" #uploader (change)="uploadFile($event)" multiple/>
+      </fieldset>
+      <!-- Notes -->
+      <div fxFlexFill fxLayout fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex="100%">
+          <mat-label>{{ 'common.text.notes' | translate }}</mat-label>
+          <textarea matInput #notes formControlName="notes" maxlength="500"></textarea>
+          <mat-hint align="end">{{ notes.value.length }} / 500</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  <!-- </form> -->
+</ng-template>
+<ng-template #selectAudiences>
+  <div>
+    <div fxFlexFill fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="15px" formGroupName="loanProviderType">
+      <span>{{ 'form.label.loan_provider_type.message' | translate }}</span>
+      <!-- <mat-radio-group [(ngModel)]="party" aria-label="Select an option" [disabled]="package" formControlName="code"> -->
+      <mat-radio-group aria-label="Select an option" formControlName="code">
+        <ng-container *ngIf="loanProviderTypes">
+          <mat-radio-button class="padding-right-50px" *ngFor="let loanProvider of loanProviderTypes" value="{{ loanProvider.code }}">{{ loanProvider.name }}</mat-radio-button>
+        </ng-container>
+        <!-- <mat-radio-button value="A">Agents</mat-radio-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-button value="B">Banks</mat-radio-button> -->
+      </mat-radio-group>
+    </div>
+    <br />
+    <div class="audience-wrapper" *ngIf="form.getRawValue().loanProviderType.code" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch"
+      fxLayoutGap="20px">
+      <div class="notes" *ngIf="form.getRawValue().loanProviderType.code === 'AGENT'">{{ 'form.label.selected_loan_provider_type_agent' | translate }}</div>
+      <div *ngIf="form.getRawValue().loanProviderType.code === 'BANK'">
+        <div class="notes">{{ 'form.label.selected_loan_provider_type_bank' | translate }}</div>
+        <ng-container *ngIf="!package">
+          <mat-form-field appearance="outline">
+              <!-- <mat-select placeholder="Bank List" #bankMatSelect multiple [disabled]="package" formControlName="banks"> -->
+            <mat-select placeholder="Bank List" #bankMatSelect multiple formControlName="banks" [compareWith]="compareBankFn">
+            <!-- <mat-select placeholder="Bank List" #bankMatSelect [(ngModel)]="banks" multiple [disabled]="package"> -->
+              <mat-select-trigger>
+                {{ banksIsValidFormArray ? (form.value.banks.length + ('form.label.selected_bank' | translate)) : ''}}
+              </mat-select-trigger>
+              <mat-option *ngFor="let bank of banks" [value]="bank">{{ bank.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+        <div *ngIf="form.getRawValue().banks && form.getRawValue().banks.length > 0">
+          <mat-chip-list>
+            <mat-chip *ngFor="let bank of form.getRawValue().banks; let i = index" [removable]="true && !package" (removed)="removeBank(i)" [disabled]="package">
+              {{ bank.name }}
+              <ng-container *ngIf="!package"><mat-icon matChipRemove>cancel</mat-icon></ng-container>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <!-- <div><button mat-raised-button color="primary"
+          [disabled]="party =='B' && (!banks || banks.length <= 0)">Continue</button></div> -->
+    </div>
+  </div>
+</ng-template>
+<ng-template #confirmApplicationForm>
+  <div>
+    <app-loan-details [loan]="form.getRawValue()"></app-loan-details>
+  </div>
+  <br />
+  <div class="text-center">
+    <!-- <mat-checkbox [(ngModel)]="agreed">{{ 'page.apply_loan.label.checkbox.message' | translate }}</mat-checkbox> -->
+    <mat-checkbox formControlName="agree">{{ 'page.apply_loan.label.checkbox.message' | translate }}</mat-checkbox>
+    <br /><br />
+    <button mat-raised-button color="primary" [disabled]="form.invalid || isSubmitted" (click)="submitForm()">Submit</button>
+  </div>
+</ng-template>
+</form>

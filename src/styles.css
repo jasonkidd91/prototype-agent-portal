@@ -1,0 +1,250 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import '@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+
+body {
+    margin: 0;
+}
+
+html, body {
+    font-family: 'Helvetica';
+}
+
+.wrapper .section-header {
+    min-height: 150px;
+    padding: 70px 40px;
+    position: relative;
+}
+
+.wrapper .section-header-bg {
+    min-height: 150px;
+    padding: 20px 40px;
+    position: relative;
+    background: #455A64;
+}
+
+.wrapper .section-header-bg:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.4;
+    /* The image used */
+    background-image: url('https://www.omni-academy.com/wp-content/uploads/2018/09/digital-marketing-home-07.jpg.png');
+    /* Full height */
+    /* height: 100%; */
+    /* Create the parallax scrolling effect */
+    background-attachment: scroll;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrapper .section-header-bg div {
+    z-index: 99;
+    text-align: center;
+    line-height: 2em;
+    color: white;
+}
+
+.wrapper .section {
+    /* min-height: 200px; */
+    padding: 50px 40px;
+    position: relative;
+}
+
+.wrapper > .section:nth-child(even) {
+    background-color: white;
+}
+
+.wrapper > .section:nth-child(odd) {
+    background-color: #eff1f2;
+}
+
+.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+    /* background: #66BB6A; */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 7px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.section-title-responsive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-navigation {
+    font-style: italic;
+    float: right;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #3f51b5;
+    /* text-decoration: underline; */
+    line-height: 1.2em;
+    border-bottom: 1px solid #3f51b5;
+}
+
+.section-navigation:active {
+    color: red;
+    border-color: red;
+}
+
+.section-navigation::after {
+    content: ' >>'
+}
+
+/* Moved to theme.scss */
+/* .section-title:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-top-color: #66BB6A;
+	border-bottom: 0;
+	margin-left: -15px;
+	margin-bottom: -15px;
+} */
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.text-left {
+    text-align: left;
+    justify-content: left;
+}
+
+.text-right {
+    text-align: right;
+    justify-content: right;
+}
+
+.text-center {
+    text-align: center;
+    justify-content: center;
+}
+
+.font-small {
+    font-size: 14px;
+}
+
+.space-filler {
+    flex: 1 1 auto;
+}
+
+.transparent .mat-dialog-container {
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.0);
+}
+
+.no-padding-modal .mat-dialog-container {
+    padding: 0px;
+}
+
+.no-padding-modal .mat-dialog-container {
+    max-height: 90vh;
+}
+
+.toast-error, .toast-error .mat-simple-snackbar-action {
+    color: white;
+    background: red;
+}
+
+.button-style1:focus { outline:0; }
+.button-style1 {
+    border: 1px solid white; 
+    border-radius: 5px;
+    padding: 15px;
+    background: rgba(255,255,255,0.5);
+    background-color : #E0E0E0; 
+    margin: 0 0 10px 0;
+    min-width: 200px;
+}
+
+.mat-checkbox-layout {
+    white-space: normal !important;
+}
+
+.mat-radio-label {
+    white-space: normal !important;
+}
+
+.mat-icon {
+    vertical-align: middle;
+ }
+ 
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid black;
+}
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 15px 0;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font: 700 18px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* top left*/
+.ribbon-top-left { top: -10px; left: -10px; }
+.ribbon-top-left::before,
+.ribbon-top-left::after { border-top-color: transparent; border-left-color: transparent; }
+.ribbon-top-left::before { top: 0; right: 0; }
+.ribbon-top-left::after { bottom: 0; left: 0; }
+.ribbon-top-left span { right: -25px; top: 30px; transform: rotate(-45deg); }
+
+/* top right*/
+.ribbon-top-right { top: -10px; right: -10px; }
+.ribbon-top-right::before,
+.ribbon-top-right::after { border-top-color: transparent; border-right-color: transparent; }
+.ribbon-top-right::before { top: 0; left: 0; }
+.ribbon-top-right::after { bottom: 0; right: 0; }
+.ribbon-top-right span { left: -25px; top: 30px; transform: rotate(45deg); }
+
+/* bottom left*/
+.ribbon-bottom-left { bottom: -10px; left: -10px; }
+.ribbon-bottom-left::before,
+.ribbon-bottom-left::after { border-bottom-color: transparent; border-left-color: transparent; }
+.ribbon-bottom-left::before { bottom: 0; right: 0; }
+.ribbon-bottom-left::after { top: 0; left: 0; }
+.ribbon-bottom-left span { right: -25px; bottom: 30px; transform: rotate(225deg); }
+
+/* bottom right*/
+.ribbon-bottom-right { bottom: -10px; right: -10px; }
+.ribbon-bottom-right::before,
+.ribbon-bottom-right::after { border-bottom-color: transparent; border-right-color: transparent; }
+.ribbon-bottom-right::before { bottom: 0; left: 0; }
+.ribbon-bottom-right::after { top: 0; right: 0; }
+.ribbon-bottom-right span { left: -25px; bottom: 30px; transform: rotate(-225deg); }

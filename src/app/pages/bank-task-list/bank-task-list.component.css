@@ -1,0 +1,12 @@
+.wrapper .section-task-list .mat-toolbar { 
+    padding: 5px 0 10px 0; font-size: 0.85rem;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;    
+}
+.wrapper .section-task-list .mat-toolbar-row:first-child { padding-bottom: 5px; }
+.wrapper .section-task-list .mat-toolbar-row { height: auto; }
+.wrapper .section-task-list .table-wrapper .table-scroll-view { overflow-x: auto; }
+.wrapper .section-task-list .table-wrapper .table-scroll-view .mat-table { min-width: 600px; }
+.wrapper .section-task-list .table-wrapper .table-container .mat-header-cell { font-weight: bold; }
+.wrapper .section-task-list .table-wrapper .table-container .status-cell {
+    font-weight:  bold; text-transform: uppercase; font-size: 12px;
+}

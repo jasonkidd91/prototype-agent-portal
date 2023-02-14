@@ -1,0 +1,17 @@
+.calculator-card mat-slider {
+    width: 100%;
+}
+
+.calculator-card .calculator-title {
+    /* color: #26A69A; */
+}
+
+.calculator-card .calculator-result-section {
+    /* background: #26A69A; */
+    padding: 20px;
+    color: white;
+}
+
+.calculator-card mat-slider .mat-slider-thumb-label-text {
+    color: var(--warn);
+  }

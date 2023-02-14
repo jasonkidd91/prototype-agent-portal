@@ -1,0 +1,41 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header [page]="switchPageTitle()" [pageParams]="{name:'Jason'}" [currentPage]="switchPageSubtitle()">
+  </app-sub-page-header>
+  <div class="section dashboard-wrapper" ngClass.xs="dashboard-wrapper-responsive">
+    <div *ngIf="isAgent() || isBank() " class="token-container" style="display: flex; justify-content: flex-end">
+      <div class="button">
+        <p class="btnText">{{ 50 }} Credits</p>
+        <div class="btnTwo" [matMenuTriggerFor]="menuToken">
+          <p class="btnText2">
+            <mat-icon>more_vert</mat-icon>
+          </p>
+        </div>
+      </div>
+      <mat-menu #menuToken="matMenu">
+        <button mat-menu-item (click)="creditHistory()">
+          <mat-icon>event_note</mat-icon> {{ 'Histories' | translate }}
+        </button>
+        <button mat-menu-item (click)="creditReload()">
+          <mat-icon>add_box</mat-icon> {{ 'Top Up' | translate }}
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="dashboard-container" fxLayoutAlign="stretch" fxLayout="row" fxLayout.xs="column" fxLayoutGap="0px">
+      <div class="dashboard-nav" fxFlex="80px" fxLayout="column" fxLayout.xs="row wrap" fxLayoutGap="0px">
+        <ng-container *ngFor="let menu of menu$">
+          <div *ngIf="menu.visible" [class.active]="activeRoute == menu.url" class="nav-menu" [routerLink]="[menu.url]"
+            routerLinkActive="active">
+            <mat-icon>{{ menu.icon }}</mat-icon><span>{{ menu.translation }}</span>
+          </div>
+        </ng-container>
+        <!-- <div class="space-filler"></div> -->
+      </div>
+      <div class="dashboard-route" fxFlex="calc(100% - 80px)">
+        <div>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

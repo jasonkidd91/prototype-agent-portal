@@ -1,0 +1,35 @@
+.agent-login-box {
+    max-width: 420px;
+    margin: auto auto;
+}
+
+.agent-login-box .login-header,
+.agent-login-box .login-body,
+.agent-login-box .login-footer {
+    width: 100%;
+    text-align: center;
+}
+
+.agent-login-box .login-header {
+    color:white;
+    padding: 20px 0;
+    background: #26A69A;
+    border-top: 1px solid #26A69A;
+    border-left: 1px solid #26A69A;
+    border-right: 1px solid #26A69A;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.agent-login-box .login-body {
+    border-left: 1px solid #26A69A;
+    border-right: 1px solid #26A69A;
+    padding: 20px 0;
+}
+
+.agent-login-box .login-footer {
+    border-left: 1px solid #26A69A;
+    border-right: 1px solid #26A69A;
+    border-bottom: 1px solid #26A69A;
+    padding-bottom: 15px;
+}

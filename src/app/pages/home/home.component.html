@@ -1,0 +1,194 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <div class="seeking-section-responsive" fxHide fxShow.lt-sm="true">
+    <ng-container *ngTemplateOutlet="seekingResponsive"></ng-container>
+  </div>
+  <div class="section-header parallax" fxHide.lt-sm="true">
+    <!-- Content -->
+    <div class="seeking-section">
+      <mat-tab-group class="seeking-card" mat-stretch-tabs color="accent">
+        <mat-tab label="Find Loans">
+          <ng-container *ngTemplateOutlet="seeking"></ng-container>
+        </mat-tab>
+        <!-- <mat-tab label="Credit Cards">
+          <ng-container *ngTemplateOutlet="seeking"></ng-container>
+        </mat-tab> -->
+      </mat-tab-group>
+    </div>
+  </div>
+  <div class="section-slogan text-center bg-primary">
+    <div fxFlexFill fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center stretch" fxLayoutGap="0px">
+      <div class="card-container" fxFlex="25%" fxFlex.sm="50%">
+        <div class="card-content">Quick & Easy</div>
+      </div>
+      <div class="card-container" fxFlex="25%" fxFlex.sm="50%">
+        <div class="card-content">No Hidden Fees</div>
+      </div>
+      <div class="card-container" fxFlex="25%" fxFlex.sm="50%">
+        <div class="card-content">Less Documents</div>
+      </div>
+      <div class="card-container" fxFlex="25%" fxFlex.sm="50%">
+        <div class="card-content">Safe & Privacy</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-packages">
+    <span class="section-navigation" (click)="viewPackages()">More Value Packages</span>
+    <div>
+      <mat-carousel class="packages-carousel" timings="250ms ease-in" [autoplay]="false" interval="5000" color="accent"
+        maxWidth="auto" proportion="25" slides="5" [loop]="true" [hideArrows]="false" [hideIndicators]="false"
+        [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr">
+        <mat-carousel-slide #matCarouselSlide overlayColor="none" [hideOverlay]="true"
+          *ngFor="let page of totalPages(); let i = index;">
+          <div class="carousel" fxFlexFill fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <div class="packages-card text-center" fxFlex="25%" fxFlex.lt-md="33%" fxFlex.lt-sm="50%"
+              *ngFor="let package of packageList(i)" [ngStyle]="stylePackage(package)" (click)="packageDetails()">
+              <div class="packages-name">
+                {{package.name}} LP-{{package.id}}
+                <br /><i>Valid till 7 August 2020 </i>
+              </div>
+              <div class="overlay">
+                <div class="text">
+                  <ul>
+                    <li *ngFor="let p of package.benefit">{{ p }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-carousel-slide>
+      </mat-carousel>
+    </div>
+  </div>
+
+  <div class="section section-service">
+    <h1 class="section-title" ngClass.lt-sm="section-title-responsive">Loan For You</h1>
+    <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+      <div fxFlex="25%" fxFlex.lt-md="50%" class="service-card">
+        <div class="card-title"><span>Car Loan</span></div>
+        <div class="card-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non nulla ut augue hendrerit commodo. Ut
+          lobortis finibus elit, non cursus nunc. Fusce tincidunt lectus nisi, ut facilisis lorem eleifend eu. Phasellus
+          sit amet accumsan nisl. Pellentesque ut gravida quam. Curabitur in tellus nibh. In non ligula condimentum,
+          congue risus.
+        </div>
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="50%" class="service-card">
+        <div class="card-title"><span>Personal Loan</span></div>
+        <div class="card-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel quam fermentum, bibendum sem a,
+          vehicula arcu. Ut maximus scelerisque ligula, eget sollicitudin eros rutrum a. Nam dapibus ipsum quis.
+        </div>
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="50%" class="service-card">
+        <div class="card-title"><span>Home Loan</span></div>
+        <div class="card-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra sit amet ipsum egestas laoreet. Sed
+          rutrum nisi eget varius venenatis. Maecenas sodales iaculis ante euismod egestas. Donec eu est in lectus
+          porttitor condimentum in vehicula neque. Maecenas nec vestibulum enim. Maecenas ut enim at.
+        </div>
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="50%" class="service-card">
+        <div class="card-title"><span>Business Loan</span></div>
+        <div class="card-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in dignissim elit, id ultricies tortor. Nullam
+          iaculis porta dui sed malesuada. Praesent egestas posuere sem, a elementum dolor rhoncus sed. Donec luctus
+          eros luctus ultrices vestibulum. Sed id metus ac magna venenatis sollicitudin. Pellentesque sed ex gravida,
+          dignissim elit ac, laoreet lacus. Vivamus dignissim sit.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-testimonial">
+    <h1 class="section-title" ngClass.lt-sm="section-title-responsive">How Peoples See Us</h1>
+    <div>
+      <mat-carousel class="testimonial-carousel" ngClass.lt-sm="testimonial-carousel-responsive" timings="250ms ease-in"
+        [autoplay]="false" interval="5000" color="accent" maxWidth="auto" proportion="15" slides="5" [loop]="true"
+        [hideArrows]="true" [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr">
+        <mat-carousel-slide #matCarouselSlide overlayColor="none" [hideOverlay]="false"
+          *ngFor="let testimonial of testimonials$">
+          <div class="carousel">
+            <div class="quotation-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+              <div class="quotation">{{testimonial.comment}}
+              </div>
+              <span class="quotation-commenter">@{{testimonial.name}}</span>
+              <div>
+                <mat-icon class="star" *ngFor="let i of [].constructor(testimonial.rating)">star</mat-icon>
+              </div>
+            </div>
+          </div>
+        </mat-carousel-slide>
+      </mat-carousel>
+    </div>
+  </div>
+</div>
+
+<ng-template #seeking>
+  <div class="seeking-content">
+    <div fxFlexFill fxLayout fxLayoutGap="15px">
+      <div fxLayout="column">
+        <p class="seeking-title">How much will be the amount?</p>
+        <div class="seeking-input">
+          <mat-form-field>
+            <input matInput placeholder="Loan Amount (RM)" value="0.00">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="space-filler"></div>
+      <div fxLayout="column">
+        <p class="seeking-title">Preferable period?</p>
+        <div class="seeking-input">
+          <mat-form-field>
+            <mat-label>Loan Term</mat-label>
+            <mat-select matNativeControl value="1">
+              <mat-option value="1">-- Select --</mat-option>
+              <mat-option value="option1">1/2 years</mat-option>
+              <mat-option value="option2">1 years</mat-option>
+              <mat-option value="option3">3 years</mat-option>
+              <mat-option value="option3">5 years</mat-option>
+              <mat-option value="option3">7 years</mat-option>
+              <mat-option value="option3">9 years</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="button-center">
+      <button mat-button>
+        <mat-icon>search</mat-icon> Begin Search
+      </button>&nbsp;
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #seekingResponsive>
+  <div class="seeking-content seeking-content-responsive" fxFlexFill fxLayout="column" fxLayoutAlign="center stretch"
+    fxLayoutGap="0px">
+    <!-- <span>Pinjanman Guru</span> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Loan Amount (RM)</mat-label>
+      <input matInput placeholder="">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Loan Term</mat-label>
+      <mat-select matNativeControl>
+        <mat-option value="option1">1/2 years</mat-option>
+        <mat-option value="option2">1 years</mat-option>
+        <mat-option value="option3">3 years</mat-option>
+        <mat-option value="option3">5 years</mat-option>
+        <mat-option value="option3">7 years</mat-option>
+        <mat-option value="option3">9 years</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="seeking-radio">
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="1" checked="true">Loans</mat-radio-button>&nbsp;&nbsp;
+        <!-- <mat-radio-button value="2">Credit Cards</mat-radio-button> -->
+      </mat-radio-group>
+    </div>
+    <button mat-button>
+      <mat-icon>search</mat-icon> Begin Search
+    </button>
+  </div>
+</ng-template>

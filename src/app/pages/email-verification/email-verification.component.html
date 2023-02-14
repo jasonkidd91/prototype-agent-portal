@@ -1,0 +1,24 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <app-sub-page-header page="page.email_verification.name" currentPage="page.email_verification.sub_name">
+  </app-sub-page-header>
+  <div class="section">
+    <h1 class="section-title" ngClass.lt-sm="section-title-responsive">
+      {{ 'page.email_verification.section_title' | translate }}</h1>
+    <br /><br /><br />
+    <div fxFlexFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+      <div fxFlex>
+        <div style="text-align: center;">
+          {{ 'page.email_verification.message_title' | translate }}
+          <br />{{ 'page.email_verification.message' | translate }}
+          <br />{{ 'page.email_verification.message2' | translate }}<a href="javascript:void(0);"
+            (click)="resendVerificationEmail()">{{ 'common.text.resend' | translate }}</a>{{ 'page.email_verification.message3' | translate }}
+        </div>
+      </div>
+      <div>
+        <button (click)="reloadPage()"
+          mat-stroked-button>{{ 'page.email_verification.btn.verified' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+</div>

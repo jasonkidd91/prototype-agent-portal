@@ -1,0 +1,62 @@
+<mat-card class="offer-card">
+  <mat-toolbar color="primary">
+    <mat-icon>account_balance</mat-icon>
+    &nbsp;
+    <span class="card-title">{{ offer?.bank_name }}</span>
+  </mat-toolbar>
+  <mat-card-content class="card-content">
+    <div fxLayout="column" fxLayoutAlign="stretch" fxLayoutGap="15px">
+
+      <div>
+        <strong>Application ID: </strong>
+        <div>#{{ offer?.id }}</div>
+      </div>
+
+      <div>
+        <strong>Loan Type: </strong>
+        <div>{{ offer?.loan_type }}</div>
+      </div>
+
+      <div>
+        <strong>Loan Amount: </strong>
+        <div>
+          <span [class.old-value]="offer?.post.amount != offer?.pre.amount">RM
+            {{ offer?.pre.amount | number:'1.2-2' }}</span>
+          &nbsp;
+          <span class="new-value" *ngIf="offer?.post.amount != offer?.pre.amount">RM
+            {{ offer?.post.amount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div>
+        <strong>Loan Term: </strong>
+        <div>
+          <span [class.old-value]="offer?.post.term != offer?.pre.term">{{ offer?.pre.term }} Years</span>
+          &nbsp;
+          <span class="new-value" *ngIf="offer?.post.term != offer?.pre.term">{{ offer?.post.term }} Years</span>
+        </div>
+      </div>
+
+      <div>
+        <strong>Interest Rate: </strong>
+        <div class="new-value">{{ offer?.rate | number:'1.2-2' }} %</div>
+      </div>
+
+      <div>
+        <strong>Installment: </strong>
+        <div class="new-value">{{ offer?.installment }} Per Month</div>
+      </div>
+
+      <div>
+        <textarea id="note-textarea" class="new-value" placeholder="notes" [value]="offer?.notes"
+          [disabled]="true"></textarea>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="text-center" *ngIf="!readOnly">
+    <button mat-raised-button color="primary" (click)="acceptOffer()">Accept</button>
+    &nbsp;&nbsp;
+    <button mat-raised-button color="warn" (click)="declineOffer()">Decline</button>
+    <br /><br />
+  </mat-card-actions>
+</mat-card>

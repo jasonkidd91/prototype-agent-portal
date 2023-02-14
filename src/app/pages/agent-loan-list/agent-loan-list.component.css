@@ -1,0 +1,8 @@
+.wrapper .section-loan-list { }
+.wrapper .section-loan-list .mat-toolbar { 
+    padding: 5px 0 10px 0; font-size: 0.85rem;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;    
+}
+.wrapper .section-loan-list .mat-toolbar-row:first-child { padding-bottom: 5px; }
+.wrapper .section-loan-list .mat-toolbar-row { height: auto; }
+.wrapper .section-loan-list .application-card { margin-top: 20px; }

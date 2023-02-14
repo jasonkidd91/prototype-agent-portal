@@ -1,0 +1,7 @@
+<div *ngIf="!customContent">
+  <button mat-button [color]="color" (click)="openDialog()">{{ label ? label : 'Open Dialog' }}</button>
+</div>
+<div class="dialog-content" *ngIf="customContent">
+  <div class="front" (click)="openDialog()"></div>
+  <ng-content></ng-content>
+</div>

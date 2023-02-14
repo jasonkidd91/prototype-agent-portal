@@ -1,0 +1,111 @@
+<div class="wrapper">
+  <div class="section section-task-list">
+    <div class="table-wrapper">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <div fxFlexFill fxLayoutAlign="center center" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start" fxLayoutGap="0px">
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+              <mat-form-field color="accent">
+                <input matInput placeholder="Keyword (ID, Name)" [(ngModel)]="search" (keyup.enter)="searchData()">
+              </mat-form-field>
+
+              <mat-form-field color="accent" fxHide.gt-xs>
+                <mat-label>Loan Type</mat-label>
+                <mat-select multiple [(ngModel)]="selectedType" #loanTypeSelect>
+                  <mat-option [value]="loanType" *ngFor="let loanType of loanType$">{{ loanType.translation }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field color="accent" fxHide.gt-xs>
+                <mat-label>Status</mat-label>
+                <mat-select multiple [(ngModel)]="selectedStatus" #statusSelect>
+                  <mat-option [value]="status" *ngFor="let status of status$">{{ status.translation }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <span class="space-filler"></span>
+            <div>
+              <button mat-flat-button (click)="searchData()" color="accent">
+                <mat-icon>search</mat-icon><span>Search</span>
+              </button>
+            </div>
+          </div>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row fxHide.lt-sm fxLayout="row wrap" fxLayoutGap="15px">
+          <span>Type: </span>
+          <mat-checkbox *ngFor="let loanType of loanType$" [checked]="selectedType.indexOf(loanType) >= 0"
+            (change)="toggleType(loanType, loanTypeSelect)">
+            {{ loanType.translation }}
+          </mat-checkbox>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row fxHide.lt-sm fxLayout="row wrap" fxLayoutGap="15px">
+          <span>Status: </span>
+          <mat-checkbox *ngFor="let status of status$" [checked]="selectedStatus.indexOf(status) >= 0"
+            (change)="toggleStatus(status, statusSelect)">
+            {{ status.translation }}
+          </mat-checkbox>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <div [class.table-scroll-view]="dataSource && dataSource.length > 0">
+        <div class="table-container">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="dt" matSortDisableClear
+            matSortDirection="desc">
+            <!-- Date Column -->
+            <ng-container matColumnDef="dt">
+              <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Date </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.dt | date:'short'}} </mat-cell>
+            </ng-container>
+
+            <!-- Application ID Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> ID # </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <!-- Loan Type Column -->
+            <ng-container matColumnDef="type">
+              <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+            </ng-container>
+
+            <!-- Applicant Name Column -->
+            <ng-container matColumnDef="user">
+              <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+            </ng-container>
+
+            <!-- Application Status Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="status-cell" [ngClass]="switchStatusClass(element.status)">
+                {{element.status}}
+              </mat-cell>
+            </ng-container>
+
+            <!-- Package Name Column -->
+            <ng-container matColumnDef="package">
+              <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.package ? element.package : '-'}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row-clickable"
+              (click)="taskDetails(row)"></mat-row>
+          </mat-table>
+        </div> <!-- End of table-container -->
+      </div> <!-- End of table-scroll-view -->
+      <div class="text-center" style="background-color: white; padding: 20px;"
+        *ngIf="isLoading || (!dataSource || dataSource.length <= 0)">
+        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+        <div *ngIf="!isLoading && (!dataSource || dataSource.length <= 0)">
+          No Records Found
+        </div>
+      </div>
+      <mat-paginator [length]="totalRecord" [pageSize]="recordPerPage" showFirstLastButtons></mat-paginator>
+    </div> <!-- End of table-wrapper -->
+  </div>
+</div>

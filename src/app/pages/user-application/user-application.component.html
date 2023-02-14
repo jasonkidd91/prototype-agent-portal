@@ -1,0 +1,210 @@
+<div class="wrapper" fxFlexFill fxLayout="column">
+  <div class="section section-application">
+    <!-- <div class="text-center" *ngIf="!isLoading && (!data$ || data$.length <= 0)">No Records<br /><br /></div> -->
+    <div class="text-center" *ngIf="isLoading || (!data$ || data$.length <= 0)">
+      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+      <div *ngIf="!isLoading && (!data$ || data$.length <= 0)">No Records</div>
+    </div>
+    <div class="application-card" fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="35px">
+      <ng-container *ngFor="let data of data$">
+        <ng-container *ngIf="applicationType == 'agent'">
+          <ng-container *ngTemplateOutlet="agentApplicationCard; context: { $implicit: data } "></ng-container>
+        </ng-container>
+        <ng-container *ngIf="applicationType == 'bank'">
+          <ng-container *ngTemplateOutlet="bankApplicationCard; context: { $implicit: data } "></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #agentApplicationCard let-data>
+  <mat-card>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <mat-icon>{{ switchLoanIcon(data.loan_type) }}</mat-icon>
+        &nbsp;
+        <span class="card-title">
+          {{ data.id }} - {{ data.loan_type }}</span>
+        <span class="space-filler"></span>
+        <button mat-icon-button (click)="viewDetails(data)">
+          <mat-icon>library_books</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-card-content>
+      <br />
+      <div class="card-content" fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="5px">
+        <div><strong>Date : </strong><span>{{ data.dt | date: 'short' }}</span></div>
+        <div><strong>Application ID : </strong><span>#{{ data.id }}</span></div>
+        <div><strong>Loan Type : </strong><span>{{ data.loan_type }}</span></div>
+        <div><strong>Loan Amount : </strong><span>RM {{ data.amount | number:'1.2-2' }}</span></div>
+        <div><strong>Loan Term : </strong><span>{{ data.term }} Years</span></div>
+        <div><strong>Status : </strong><strong style="color:red;">{{ data.status }}</strong></div>
+        <div *ngIf="data.status == 'REJECTED'">
+          <strong>Reason : </strong><span>{{ data.reason }}</span>
+        </div>
+        <div>
+          <strong>Agent : </strong>
+          <span *ngIf="data.agent"><a href="javascript:void(0)"
+              (click)="agentDetails(data.agent)">{{ data.agent.name }}</a></span>
+          <span *ngIf="!data.agent">-</span>
+        </div>
+        <br />
+        <div *ngIf="data.status == 'NEW'">
+          <mat-accordion class="agent-accordion accordian-hover-accent accordian-active-accent">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="header-title">
+                    <mat-icon>people</mat-icon> Agent Applied <span
+                      *ngIf="data.request && data.request.length > 0"><i>(Choose One)</i></span>
+                  </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="accordion-content" fxFlexFill fxLayoutAlign="start stretch" fxLayout="column"
+                fxLayoutGap="5px">
+                <ng-container *ngIf="data.request && data.request.length > 0">
+                  <mat-radio-group [(ngModel)]="data.choosen" fxLayout="column" fxLayoutGap="10px">
+                    <div *ngFor="let req of data.request">
+                      <mat-radio-button class="example-radio-button" [value]="req.agent">
+                      </mat-radio-button>
+                      {{ req.dt | date: 'short' }} - <a href="javascript:void(0)"
+                        (click)="agentDetails(data.agent)">{{ req.agent.name }}</a> (Total Case:
+                      {{ req.total_case > 0 ? req.total_case : '-' }}, Rating:
+                      {{ req.overall_rating > 0 ? (req.overall_rating | number:'1.2-2') + ' / 5' : '-' }})
+                    </div>
+                  </mat-radio-group>
+                </ng-container>
+                <ng-container *ngIf="!data.request || data.request.length <= 0">
+                  No agent apply yet, please be patient, should there any agent applied, we will notify you
+                  immediately.
+                </ng-container>
+              </div>
+
+              <mat-action-row *ngIf="data.request && data.request.length > 0">
+                <button mat-raised-button color="warn" (click)="assignAgent(data)"
+                  [disabled]="!data.choosen">Assign</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <!-- Application Logs -->
+        <!-- <div>
+          <mat-accordion class="log-accordion accordian-hover-accent accordian-active-accent">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="header-title">
+                    <mat-icon>list_alt</mat-icon> Application Logs
+                  </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="accordion-content" fxFlexFill fxLayoutAlign="start stretch" fxLayout="column"
+                fxLayoutGap="5px">
+                <li *ngFor="let log of data.logs">{{ log.dt | date: 'short' }} - {{ log.message }}</li>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div> -->
+      </div>
+    </mat-card-content>
+    <mat-card-actions style="border-top: 1px solid #ECECEC;" *ngIf="data.status != 'DISCARDED'">
+      <ng-container *ngIf="data.status == 'REJECTED' || data.status == 'APPROVED'">
+        <!-- <button mat-button color="primary" (click)="reopenApplication(data)">Reopen</button> -->
+        <button mat-button color="primary">Rate Us</button>
+        <button mat-button color="primary" *ngIf="data.status == 'REJECTED' && !data.repost"
+          (click)="repostApplication(data)">Repost</button>
+      </ng-container>
+      <ng-container *ngIf="data.status != 'REJECTED' && data.status != 'APPROVED'">
+        <button mat-button color="accent" *ngIf="data.agent">Contact</button>
+        <button mat-button color="warn" (click)="discardApplication(data)">Discard</button>
+      </ng-container>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
+
+<ng-template #bankApplicationCard let-data>
+  <mat-card>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <mat-icon>{{ switchLoanIcon(data.loan_type) }}</mat-icon>
+        &nbsp;
+        <span class="card-title">
+          {{ data.id }} - {{ data.loan_type }}</span>
+        <span class="space-filler"></span>
+        <button mat-icon-button (click)="viewDetails(data)">
+          <mat-icon>library_books</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-card-content>
+      <br />
+      <div class="card-content" fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="5px">
+        <div><strong>Date : </strong><span>{{ data.dt | date: 'short' }}</span></div>
+        <div><strong>Application ID : </strong><span>#{{ data.id }}</span></div>
+        <div><strong>Loan Type : </strong><span>{{ data.loan_type }}</span></div>
+        <div><strong>Loan Amount : </strong><span>RM {{ data.amount | number:'1.2-2' }}</span></div>
+        <div><strong>Loan Term : </strong><span>{{ data.term }} Years</span></div>
+        <div><strong>Status : </strong><strong style="color:red;">{{ data.status }}</strong></div>
+        <br />
+        <div>
+          <mat-accordion class="bank-accordion accordian-hover-accent accordian-active-accent">
+            <mat-expansion-panel [expanded]="data.status != 'CLOSED'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="header-title">
+                    <mat-icon>account_balance</mat-icon> Banks
+                  </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="accordion-content" fxFlexFill fxLayoutAlign="start stretch" fxLayout="column"
+                fxLayoutGap="0px">
+                <mat-list role="list" class="bank-list">
+                  <mat-list-item role="listitem" *ngFor="let bank of data.banks">
+                    <mat-icon mat-list-icon>arrow_right</mat-icon>
+                    <h4 mat-line>{{ bank.name }}</h4>
+                    <div class="status" mat-line>
+                      <a href="javascript:void(0)" (click)="offerDetails(data, bank)"
+                        *ngIf="bank.offered">{{ bank.status }}</a>
+                      <span *ngIf="!bank.offered">
+                        <span
+                          [ngClass]="bank.status == 'PENDING' ? 'color-primary' : 'color-warn'">{{ bank.status }}</span>
+                        <span *ngIf="bank.reason" style="font-size: 0.8em;"> - {{ bank.reason }}</span>
+                      </span>
+                    </div>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <!-- Application Logs -->
+        <!-- <div>
+          <mat-accordion class="log-accordion accordian-hover-accent accordian-active-accent">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="header-title">
+                    <mat-icon>list_alt</mat-icon> Application Logs
+                  </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="accordion-content" fxFlexFill fxLayoutAlign="start stretch" fxLayout="column"
+                fxLayoutGap="5px">
+                <li *ngFor="let log of data.logs">{{ log.dt | date: 'short' }} - {{ log.message }}</li>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div> -->
+      </div>
+    </mat-card-content>
+    <mat-card-actions style="border-top: 1px solid #ECECEC;" *ngIf="data.status == 'CLOSED'">
+      <button mat-button color="primary">Rate Us</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>

@@ -1,0 +1,62 @@
+.package-header .image-wrapper { text-align: center; }
+.package-header .image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    display:block;
+    /* border: 1px solid black; */
+}
+.package-header .fix-image-wrapper { padding-top: 20px; }
+.package-header .fix-image-wrapper img {
+    display: inline;
+    max-width: 50%;
+}
+
+
+.package-header .title-wrapper { margin: 50px 30px; }
+.package-header .package-name { letter-spacing: 3px; }
+.package-header .package-name span {
+    color: white;
+    background-color: black;
+    border: 5px solid black;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 12px;
+}
+
+
+.package-banner {
+    background: #009688;
+    height: 50px;
+    line-height: 50px;
+    -webkit-box-shadow: 2px 7px 8px #777;
+	-moz-box-shadow: 2px 7px 8px #777;
+    box-shadow: 2px 7px 8px #777;
+    text-align: right;
+}
+.package-banner div {
+    float: right;
+    background-color: black;
+    position: relative;
+    padding: 0 20px;
+    color: white;
+    letter-spacing: 1px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.package-banner div::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -15px;
+    border-top: 50px solid transparent;
+    border-right: 15px solid black;
+    width: 0;
+}
+
+
+.package-description {
+    padding: 20px 20px;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+    line-height: 1.2rem;
+}
+.package-description li { margin: 0.8em 0; }

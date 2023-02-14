@@ -1,0 +1,370 @@
+.parallax {
+    position: relative;
+    background: #455A64;
+}
+
+.parallax:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.5;
+    /* The image used */
+    background-image: url('https://www.omni-academy.com/wp-content/uploads/2018/09/digital-marketing-home-07.jpg.png');
+    /* Full height */
+    /* height: 100%; */
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+}
+
+.section-slogan {
+    /* background: #26A69A; */
+    padding: 80px 0 0 0;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.section-slogan .card-content {
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 20px 20px;
+	background: none;
+	border: none;
+	position: relative;
+	text-transform: uppercase;
+	font-weight: bold;
+    letter-spacing: 3px;
+    width: 65%;
+}
+.section-slogan .card-content:before, .section-slogan .card-content:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 2px solid white;
+    transition: transform .2s ;
+}
+.section-slogan .card-content:before {
+    transform: translate(-4px, -4px);
+}
+.section-slogan .card-content:after {
+    transform: translate(3px, 3px);
+}
+.section-slogan .card-content:hover:before, .section-slogan .card-content:hover:after {
+    transform: translate(0);
+}
+.section-slogan .card-content:hover {
+    color: #009688;
+    background-color: white;
+}
+
+.seeking-section-responsive {
+    position: relative;
+    background: #455A64;
+    padding: 15px 5px;
+}
+
+.seeking-section-responsive:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* z-index: 1; */
+    opacity: 0.2;
+    background-image: url('https://www.omni-academy.com/wp-content/uploads/2018/09/digital-marketing-home-07.jpg.png');
+}
+
+.seeking-content-responsive {
+    text-align: center;
+}
+
+.seeking-content-responsive .seeking-radio {
+    text-align: right;
+}
+
+.seeking-content-responsive, .seeking-content-responsive .mat-form-field-label, .seeking-content-responsive .mat-select-value-text,
+.seeking-content-responsive .mat-form-field-outline {
+    color: white;
+    font-style: italic;
+}
+
+.seeking-section {
+    position: absolute; 
+    left: 50%;
+    transform: translate(-50%, 90px);
+    z-index: 80;
+}
+
+.seeking-card {
+    min-width: 400px;
+    padding: 0px;
+    background-color: rgb(48, 52, 56, 0.7);
+    border-radius: 5px;
+}
+
+.seeking-card, .mat-tab-label {
+    color: white;
+}
+
+.seeking-title {
+    font-size: 11px;
+    height: 15px;
+}
+
+.seeking-content {
+    padding: 0px 8px;
+}
+
+.seeking-input {
+    background: white;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.button-center {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.seeking-content .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+
+.seeking-content .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+}
+
+.ceiling {
+    padding-top: 22px;
+}
+
+.packages-carousel .carousel > button:first-of-type {
+   left: 0px !important;
+}
+
+.packages-carousel .carousel > button:last-of-type {
+    right: 0px !important;
+}
+
+.packages-carousel .carousel .carousel-indicators {
+    bottom: 0px;
+}
+
+.packages-carousel .carousel .packages-card:first-of-type {
+    margin-left: 35px;
+}
+
+.packages-carousel .carousel .packages-card:last-of-type {
+    margin-right: 35px;
+}
+
+.packages-carousel .packages-card {
+    background: url("https://www.mageants.com/media/catalog/product/optimized/3/3/333f795cfa8f71790e7b0c4ed436a01b/free_gidt.jpg");
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px double #f7f7f7;
+    border-radius: 15px;
+    height: 75%;
+    position: relative;
+    margin-bottom: 5%;
+}
+
+.packages-carousel .packages-card .packages-name {
+    padding: 3% 0;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color:rgb(63,81,181,0.8);
+    color: white;
+    font-size: 1.2vw;
+}
+
+.packages-carousel .packages-card .overlay {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #3f51b5;
+    border-radius: 15px;
+}
+
+.packages-carousel .packages-card:hover .overlay {
+    opacity: 0.9;
+}
+
+.packages-carousel .packages-card .overlay .text {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    font-size: 1.5vw;
+}
+
+.packages-carousel .packages-card .overlay .text ul {
+    color: white;
+    text-align: left;
+    line-height: 1.5em;
+  }
+
+.service-card {
+    text-align: center;
+    border: 0px solid #e6e6e6;
+    background-color: white;
+    box-shadow: 0px -1px 2px rgba(58, 58, 58, 0.1), 1px 1px 2px rgba(58, 58, 58, 0.1);
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.service-card > .card-title, .service-card > .card-content {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+}
+
+.service-card > .card-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 1.5rem 0;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    color: white;
+    text-transform: uppercase;
+    background-color: rgb(63,81,181);
+}
+
+.service-card > .card-content {
+    /* text-align: center; */
+    line-height: 1.5em;
+}
+
+.section-testimonial {
+    /* background: #eff1f2; */
+    line-height: 3em;
+}
+
+.quotation{
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    quotes: "\201C""\201D""\2018""\2019";
+    padding: 10px 50px;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 500px;
+    color:white;
+}
+  
+
+.quotation:before {
+    content: open-quote;
+    display: inline;
+    height: 0;
+    line-height: 0;
+    left: -10px;
+    position: relative;
+    top: 20px;
+    color: #ccc;
+    font-size: 3em;
+}
+
+.quotation::after {
+    content: close-quote;
+    display: inline;
+    height: 0;
+    line-height: 0;
+    left: 10px;
+    position: relative;
+    top: 35px;
+    color: #ccc;
+    font-size: 3em;
+}
+
+.quotation-commenter {
+    margin:0;
+    text-align: right;
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.quotation-commenter:before {
+    content: '\2014'
+}
+
+.star {
+    color: #e8da19;
+}
+
+.testimonial-carousel .carousel,
+.testimonial-carousel .carousel-slide,
+.testimonial-carousel .carousel-slide-content {
+    min-height: 150px;
+}
+
+.testimonial-carousel-responsive .carousel,
+.testimonial-carousel-responsive .carousel-slide,
+.testimonial-carousel-responsive .carousel-slide-content {
+    min-height: 200px;
+}
+
+.testimonial-carousel .quotation-container{
+    width: 90%;
+    padding: 20px 22px;
+    background: #1f487e;
+    font-size: 15px;
+    color: #fff;
+    line-height: 25px;
+    margin: auto;
+    position: relative;
+}
+.testimonial-carousel .quotation-container:before,
+.testimonial-carousel .quotation-container:after{
+    content: "";
+    border-width: 18px 0 0 18px;
+    border-style: solid;
+    border-color: #5d7aa7 transparent transparent;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+}
+.testimonial-carousel .quotation-container:after{
+    border-width: 18px 18px 0 0;
+    left: auto;
+    right: 0;
+}
+
+.testimonial-carousel-responsive .quotation {
+    font-size: 14px;
+}
+
+.testimonial-carousel-responsive .quotation:before,
+.testimonial-carousel-responsive .quotation::after {
+    content: '';
+}
+
+.testimonial-carousel-responsive  .quotation-commenter {
+    font-size: 16px;
+}

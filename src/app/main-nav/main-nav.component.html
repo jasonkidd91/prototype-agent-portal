@@ -1,0 +1,105 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav"
+    fixedInViewport="false"
+    [ngClass]="{hidden:!(isHandset$ | async)}"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="false">
+    <mat-toolbar><span><a routerLink="/home"><img class="sidenav-logo" src="https://i.stack.imgur.com/xHXfr.png" /></a></span>
+    </mat-toolbar>
+    <mat-nav-list>
+        <ng-container *ngFor="let menu of $menu">
+          <a *ngIf="menu.visible" [class.active]="menu.url === activeMenu$" mat-list-item [routerLink]="menu.url"><mat-icon>{{ menu.icon }}</mat-icon>&nbsp;&nbsp;{{ menu.translation | translate }}</a>
+        </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="nav-container">
+      <mat-toolbar role="heading" class="nav-bar" [ngClass.gt-xs]="sticky ? 'stickyMenu' : ''">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <ng-container *ngIf="!(isHandset$ | async)">
+          <span><a routerLink="/home"><img class="nav-logo" src="https://i.stack.imgur.com/xHXfr.png" /></a></span>
+          <span class="space-filler"></span>
+          <ng-container *ngFor="let menu of $menu">
+              <a *ngIf="menu.visible" class="nav-button" [class.active]="menu.url === activeMenu$" [routerLink]="menu.url">{{ menu.translation | translate }}</a>
+          </ng-container>
+          <!-- <a class="nav-button" routerLink="/apply-loan">Loans</a>
+          <a class="nav-button" routerLink="/apply-credit-card">Credit Cards</a>
+          <a class="nav-button" href="#">Mortgages</a>
+          <a class="nav-button" routerLink="/calculator">Calculator</a>
+          <a class="nav-button" href="#">Credit Reports</a>
+          <a class="nav-button" routerLink="/about-us">About Us</a> -->
+        </ng-container>
+        <span class="space-filler" *ngIf="isHandset$ | async"><!-- Keep Below Button to Right In Small Screen --></span>
+        <button mat-stroked-button (click)="openSignIn()" *ngIf="!isLogin()">{{ 'common.text.sign_in' | translate }}</button>
+        <button mat-mini-fab [matMenuTriggerFor]="menuLogin" *ngIf="isLogin()" color="primary" matBadge="1" matBadgePosition="after" matBadgeColor="warn">{{ shortName | uppercase }}</button>
+        <mat-menu #menuLogin="matMenu">
+            <button mat-menu-item routerLink="/bank/index" *ngIf="isAgent()"><mat-icon>account_balance</mat-icon> {{ 'page.bank_office.menu.name' | translate }}</button>
+            <button mat-menu-item routerLink="/agent/index" *ngIf="isAgent()"><mat-icon>dashboard</mat-icon> {{ 'page.agent_dashboard.menu.name' | translate }}</button>
+            <button mat-menu-item routerLink="/spaces/index"><mat-icon matBadge="15" matBadgeColor="warn">web</mat-icon> {{ 'page.user_spaces.menu.name' | translate }}</button>
+            <button mat-menu-item routerLink="/my-profile"><mat-icon>account_circle</mat-icon> {{ 'page.my_profile.menu.name' | translate }}</button>
+            <button mat-menu-item (click)="signOut()"><mat-icon>exit_to_app</mat-icon> {{ 'common.text.logout' | translate }}</button>
+          </mat-menu>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <span class="flag-icon flag-icon-{{langSelected().icon}} flag-icon-rounded"></span> {{ langSelected().name }} <i class="arrow down"></i></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="setLanguage(lang.code)" *ngFor="let lang of langChoices()"><span class="flag-icon flag-icon-{{lang.icon}} flag-icon-rounded"></span> {{ lang.name }}</button>
+        </mat-menu>
+      </mat-toolbar>
+    </div>
+
+    <!-- Content -->
+    <ng-content></ng-content>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" mat-flat-button color="warn" [class.hidden]="!backTopBtn" (click)="scrollToTop()"><mat-icon>arrow_upward</mat-icon> <span fxHide.lt-sm>Back to Top</span></button>
+
+    <!-- Footer -->
+    <mat-card class="footer bg-primary">
+        <!-- <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Shiba Inu</mat-card-title>
+          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        </mat-card-header> -->
+        <mat-card-content>
+          <div class="footer-links">
+            <a href="#">{{ 'footer.nav.contact_us' | translate }}</a><a href="#">{{ 'footer.nav.privacy_policy' | translate }}</a><a href="#">{{ 'footer.nav.product_providers' | translate }}</a><a href="#">{{ 'footer.nav.tnc' | translate }}</a><a href="#">{{ 'footer.nav.sitemap' | translate }}</a>
+          </div>
+          <br/>
+          <p class="footer-info">{{ 'footer.message' | translate }}</p>
+          <p class="footer-info">{{ 'footer.message2' | translate }}</p>
+          <div class="flex-row-container social-buttons text-center" *ngIf="(isHandset$ | async)">
+              <button mat-button><img class="button-icon" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png"/></button>
+              <button mat-button><img class="button-icon" src="https://cdn4.iconfinder.com/data/icons/social-media-2146/512/25_social-512.png"/></button>
+              <button mat-button><img class="button-icon" src="https://cdn4.iconfinder.com/data/icons/social-media-2146/512/2_social-512.png"/></button>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="flex-row-container">
+          <div class="footer-contacts">
+            <button mat-button>
+                <mat-icon>phone</mat-icon> 012-3456789
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <button mat-button>
+                <mat-icon>email</mat-icon> agent-portal@example.com
+            </button>
+            <br/>
+            <span class="opening-info">( Monday to Friday 10AM - 6PM )</span>
+          </div>
+          <span class="space-filler"></span>
+          <div class="flex-row-container social-buttons" *ngIf="!(isHandset$ | async)">
+              <button mat-button><img class="button-icon" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-512.png"/></button>
+              <button mat-button><img class="button-icon" src="https://cdn4.iconfinder.com/data/icons/social-media-2146/512/25_social-512.png"/></button>
+              <button mat-button><img class="button-icon" src="https://cdn4.iconfinder.com/data/icons/social-media-2146/512/2_social-512.png"/></button>
+          </div>
+        </mat-card-actions>
+        <mat-card-footer class="footer-disclaimer">            
+            <p>&copy; {{ currentDate$ | date:'yyyy' }} Company Name (Registration No.) All Right Reserved.</p>
+        </mat-card-footer>
+      </mat-card>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

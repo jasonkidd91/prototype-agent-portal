@@ -1,0 +1,15 @@
+<div class="credit-history-wrapper">
+  <div *ngIf="!isLoading && (!data$ || data$.length <= 0)" class="text-center">No Credit History Yet</div>
+  <mat-list class="credit-history-list">
+    <ng-container *ngFor="let transaction of data$">
+      <h3 class="list-header" mat-subheader>{{ transaction.date }}</h3>
+      <mat-list-item *ngFor="let data of transaction.data">
+        <mat-icon mat-list-icon [color]="data.t_type == 'credit' ? 'primary' : 'warn'">
+          {{ data.t_type == 'credit' ? 'add' : 'reply' }}</mat-icon>
+        <h4 class="list-note" mat-line>{{ data.note }}</h4>
+        <p class="list-label" mat-line> {{ data.dt | date: 'shortTime' }} </p>
+      </mat-list-item>
+      <!-- <mat-divider></mat-divider> -->
+    </ng-container>
+  </mat-list>
+</div>

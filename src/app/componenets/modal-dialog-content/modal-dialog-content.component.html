@@ -1,0 +1,14 @@
+<div class="sws-modal">
+  <a *ngIf="!data.hideCloseButton" class="close-button" href="javascript:void(0)" (click)="closeModal()">X</a>
+  <div class="modal-wrapper" [class.extra-padding]="data.padding">
+    <div class="modal-header" *ngIf="data.title">
+      <div class="modal-title">{{ data.title }}</div>
+    </div>
+    <div class="modal-content">
+      <ng-container *ngComponentOutlet="data.component; injector: dataInjector;"></ng-container>
+    </div>
+    <!-- <mat-dialog-actions class="text-center">
+      <button mat-button [mat-dialog-close]="true">Close</button>
+    </mat-dialog-actions> -->
+  </div>
+</div>

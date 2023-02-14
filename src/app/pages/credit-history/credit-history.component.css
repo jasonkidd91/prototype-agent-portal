@@ -1,0 +1,15 @@
+.credit-history-wrapper .credit-history-list .list-header {
+    background-color: var(--primary);
+    color: white;
+}
+.credit-history-wrapper .credit-history-list .list-note {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+}
+.credit-history-wrapper .credit-history-list .list-label {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.80rem;
+    color: #3a3a3a;
+    font-style: italic;
+}

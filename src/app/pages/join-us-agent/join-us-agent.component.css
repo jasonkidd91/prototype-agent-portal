@@ -1,0 +1,10 @@
+.be-agent-card .be-agent-section {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+    line-height: 1.8em;
+}
+.be-agent-card .be-agent-section .title { color: var(--primary); font-size: 28px; }
+.be-agent-card .be-agent-section .highlighted { font-weight: bolder; }
+.be-agent-card .img-wrapper { width: 100%; }
+.be-agent-card .img-wrapper img { width: 100%; height: auto; }

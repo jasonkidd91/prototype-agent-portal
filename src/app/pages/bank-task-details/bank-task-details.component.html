@@ -1,0 +1,113 @@
+<div class="task-info-card">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Application Summary</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div>
+    <mat-card>
+      <mat-card-content class="card-content">
+        <div><strong>Date: </strong> {{ task?.dt | date:'short' }}</div>
+        <div><strong>ID #:</strong> {{ task?.id }}</div>
+        <div><strong>Name: </strong> {{ task?.name }}</div>
+        <div><strong>Loan Type: </strong> {{ task?.loan_type }}</div>
+        <div><strong>Loan Amount: </strong> {{ task?.amount | number:'1.2-2' }}</div>
+        <div><strong>Loan Term: </strong> {{ task?.term }} Years</div>
+        <div *ngIf="task?.rate"><strong>Interest Rate: </strong> {{ task?.rate }} %</div>
+        <div *ngIf="task?.installment"><strong>Installment: </strong> RM {{ task?.installment }} per month</div>
+        <div><strong>Status: </strong> <span
+            [ngClass]="switchStatusClass(task?.status)">{{ task?.status | uppercase }}</span></div>
+        <div *ngIf="task?.status == 'Rejected'"><strong>Reason: </strong> {{ task?.reason }}</div>
+        <div><strong>Package: </strong>
+          <a href="javascript:void(0)" (click)="packageDetails()" *ngIf="task?.package">{{ task.package }}</a>
+          <span *ngIf="!task?.package">-</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- Pending Review State -->
+        <ng-container *ngIf="task?.status == 'Pending Review'">
+          <ng-container *ngTemplateOutlet="pendingReview"></ng-container>
+        </ng-container>
+
+        <!-- Waiting Reply State -->
+        <ng-container *ngIf="task?.status == 'Waiting Reply'">
+          <ng-container *ngTemplateOutlet="waitingReply"></ng-container>
+        </ng-container>
+
+        <!-- In Progress State -->
+        <ng-container *ngIf="task?.status == 'In Progress'">
+          <ng-container *ngTemplateOutlet="inProgress"></ng-container>
+        </ng-container>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<br />
+<div class="loan-details-card">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Applicant Info</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div>
+    <app-loan-details></app-loan-details>
+  </div>
+</div>
+
+<ng-template #pendingReview>
+  <ng-container>
+    <div>
+      <button mat-raised-button color="primary" (click)="task?.package ? acceptTask() : offerState = true;"
+        [disabled]="offerState">{{ task?.package ? 'Approve' : 'Respond' }}</button>
+      &nbsp;
+      <button mat-raised-button color="warn" (click)="offerState = false; rejectTask();">Reject</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="offerState">
+    <br />
+    <mat-divider></mat-divider>
+    <br />
+
+    <div fxLayout.lt-md="column" fxLayoutGap="20px">
+      <mat-form-field>
+        <input matInput placeholder="Offer Amount" [value]="task?.amount">
+        <mat-hint>RM {{ task?.amount | number:'1.2-2' }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Offer Terms" [value]="task?.term">
+        <mat-hint>{{ task?.term }} Years</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Offer Interest Rate %">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Remarks(Optional)">
+      </mat-form-field>
+
+      <button mat-raised-button color="warn" (click)="acceptTask()">Submit</button>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #waitingReply>
+  <ng-container>
+    <div>
+      <button mat-raised-button color="accent">Reply</button>
+      &nbsp;
+      <button mat-raised-button color="warn" (click)="rejectTask()">Reject &
+        Close</button>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #inProgress>
+  <ng-container>
+    <button mat-raised-button color="accent">Reply</button>
+    &nbsp;
+    <button mat-raised-button color="primary" (click)="completeTask()">Completed</button>
+  </ng-container>
+</ng-template>

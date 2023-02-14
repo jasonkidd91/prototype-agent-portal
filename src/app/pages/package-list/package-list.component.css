@@ -1,0 +1,59 @@
+.packages-list-wrapper > .list-header {
+    background: var(--primary);
+    padding: 20px;
+}
+.packages-list-wrapper .btn-wrapper button {
+    /* width: 60px; */
+    margin: 10px;
+}
+.packages-list-wrapper .alternative-wrapper .alternative-content {
+    background: white;
+    margin: 10px;
+    padding: 10px 15px;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+    border-radius: 4px;
+    line-height: 1.1rem;
+}
+.packages-list-wrapper .alternative-wrapper .accordion { border-radius: 0; }
+.packages-list-wrapper .alternative-wrapper .accordion .accrodion-button { cursor: pointer; margin: 0;}
+.packages-list-wrapper .alternative-wrapper .accordion .accrodion-button::before {
+    content: ' ';
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-right: 8px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.packages-list-wrapper .alternative-wrapper .accordion .accrodion-wrapper { padding-top: 10px; }
+.packages-list-wrapper .alternative-wrapper .accordion .hide { display: none; }
+.packages-list-wrapper .custom-order-list { counter-reset: line;}
+.packages-list-wrapper .custom-order-list .list-item { counter-increment: line; margin: 0.5em 0; }
+.packages-list-wrapper .custom-order-list .list-item::before { content: counter(line)'. '; }
+
+
+.packages-list-wrapper > .list-result { background: #ECECEC; }
+.packages-list-wrapper > .list-result .no-result { padding: 20px 0; }
+.packages-list-wrapper > .list-result .package-card { margin: 20px; }
+.packages-list-wrapper > .list-result .package-card .image-wrapper img {
+    width: 100px;
+    height: auto;
+    display:block;
+}
+.packages-list-wrapper > .list-result .package-card-content { text-align: center; }
+.packages-list-wrapper > .list-result .loan-info-wrapper { color: var(--accent); }
+.packages-list-wrapper > .list-result .loan-info-wrapper .info-title {
+    font-size: calc(7px + 1vw);
+    font-weight: bold;
+}
+.packages-list-wrapper > .list-result .loan-info-wrapper .info-subtitle { font-size: calc(7px + 0.5vw); }
+.packages-list-wrapper > .list-result .btn-wrapper button { width: 75px; }
+.packages-list-wrapper > .list-result .package-card-description {
+    padding: 10px 0;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+}

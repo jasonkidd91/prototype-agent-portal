@@ -1,0 +1,37 @@
+.sign-in-container .container-left, .sign-in-container .container-right {
+    text-align: center;
+    height: 100%;
+}
+
+.sign-in-container .container-left {    
+    /* background: #66BB6A; */
+    color: white;
+    padding: 0px 25px;
+}
+
+.sign-in-container .container-right {    
+    padding: 0px 45px;
+}
+
+.input-sign-in {
+    width: 100%;
+}
+
+.register-title {
+    font-weight: bold;
+}
+
+.container-right button {
+    color: white !important;
+    /* background: #66BB6A; */
+    width: 150px;
+}
+
+.register-link , .register-link:visited {
+    /* color: #66BB6A; */
+}
+
+.forgot-password-link, .forgot-password-link:visited {
+    color: #757575;
+    text-decoration: none;
+}

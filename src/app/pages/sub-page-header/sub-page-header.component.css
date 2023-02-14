@@ -1,0 +1,4 @@
+.section-header-bg .directory .splitter::before {
+    content: '|';
+    padding: 0 25px;
+}

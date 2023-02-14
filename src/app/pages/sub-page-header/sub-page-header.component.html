@@ -1,0 +1,12 @@
+<div class="section-header-bg">
+  <div fxFlexFill fxLayoutAlign="center stretch" fxLayout="column">
+    <div>
+      <h1 style="text-transform: uppercase" translate [translateParams]="pageParams">{{ page }}</h1>
+    </div>
+    <div class="directory">
+      <span style="text-transform: uppercase" translate [translateParams]="prevPageParams">{{ prevPage ? prevPage : 'page.home.name' }}</span>
+      <span class="splitter"></span>
+      <span style="text-transform: uppercase" translate [translateParams]="currentPageParams">{{ currentPage }}</span>
+    </div>
+  </div>
+</div>

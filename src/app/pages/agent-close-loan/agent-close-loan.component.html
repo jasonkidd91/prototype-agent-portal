@@ -1,0 +1,56 @@
+<div class="wrapper">
+  <div class="section">
+    <!-- <div class="text-center" *ngIf="!isLoading && (!data$ || data$.length <= 0)">No Results<br /><br /></div> -->
+    <div class="text-center" *ngIf="isLoading || (!data$ || data$.length <= 0)">
+      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+      <div *ngIf="!isLoading && (!data$ || data$.length <= 0)">No Results</div>
+    </div>
+    <div class="application-card" fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="15px">
+      <ng-container *ngFor="let data of data$">
+        <mat-card *ngIf="data.status != 'PENDING'">
+          <mat-card-header style="border-bottom: 1px solid #ECECEC;">
+            <img mat-card-avatar [src]="data.gender == 'M' ?
+                    'https://previews.123rf.com/images/solargaria/solargaria1709/solargaria170900007/85362512-user-icon-male-avatar-in-business-suit-businessman-flat-icon-man-in-business-suit-avatar-of-business.jpg'
+                    : 'https://icon-library.net/images/avatar-icon-png/avatar-icon-png-10.jpg'" />
+            <mat-card-title>#{{ data.id }} - {{ data.type }}</mat-card-title>
+            <mat-card-subtitle>{{ data.gender == 'M' ? 'Mr.' : 'Ms.' }} {{ data.name }}</mat-card-subtitle>
+            <div fxFlex></div>
+            <button mat-icon-button color="accent" (click)="viewDetails()">
+              <mat-icon>library_books</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <br />
+            <div fxLayoutAlign="center stretch" fxLayout="column" fxLayoutGap="5px">
+              <div><strong>Date Request : </strong><span>{{ data.dt_request }}</span></div>
+              <div><strong>Date Matched : </strong><span>{{ data.dt_match }}</span></div>
+              <div><strong>Date Reopened : </strong><span>{{ data.dt_reopen ? data.dt_reopen : '-' }}</span></div>
+              <div><strong>Date Closing : </strong><span>{{ data.dt_close }}</span></div>
+              <div><strong>Status : </strong><strong style="color:red;">{{ data.status }}</strong>
+              </div>
+              <div><strong>Reason : </strong><span>{{ data.reason ? data.reason : '-' }}</span></div>
+              <div><strong>Contact : </strong><span>{{ data.contact }}</span></div>
+              <div><strong>Amount : </strong><span>RM {{ data.amount | number:'1.2-2' }}</span></div>
+              <div><strong>Period : </strong><span>{{ data.period }} Years</span></div>
+              <div><strong>Annual Income : </strong><span>RM {{ data.annual_income | number:'1.2-2' }}</span></div>
+              <div><strong>Business : </strong><span>{{ data.business_type }}</span></div>
+              <div><strong>Company : </strong><span>{{ data.company_name }}</span></div>
+              <div><strong>Occupation : </strong><span>{{ data.occupation }}</span></div>
+              <div><strong>Unclear Loan : </strong><span>{{ data.unclear_loan ? 'Yes' : 'No' }}</span></div>
+              <div>
+                <strong>Supporting Documents : </strong>
+                <span *ngIf="!data.support_docs || data.support_docs.length <= 0">-</span>
+                <button mat-button *ngFor="let doc of data.support_docs">
+                  <mat-icon>attach_file</mat-icon> {{ doc.fileName }}
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+          <!-- <mat-card-actions style="border-top: 1px solid #ECECEC;">
+            <button mat-button color="accent">CONTACT</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

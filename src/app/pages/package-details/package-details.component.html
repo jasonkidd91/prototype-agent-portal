@@ -1,0 +1,46 @@
+<div class="package-header" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start stretch" fxLayoutGap="0px">
+  <div fxFlex="35%" fxLayout fxLayoutAlign="center center" fxLayoutGap="0px">
+    <div class="image-wrapper" ngClass.lt-md="fix-image-wrapper">
+      <img [src]="data.imageUrl">
+    </div>
+  </div>
+  <div fxFlex>
+    <div class="title-wrapper text-center">
+      <div class="package-name">
+        <span>{{ data.translations[0].name }}</span>
+      </div>
+      <br />
+      <ng-container *ngIf="data.endAt">
+        <p style="font-size: 0.85rem;">{{ 'page.package_details.label.valid_till' | translate }}{{ 'common.label.space' | translate }}<b>{{ data.endAt | date : 'dd MMM yyyy' }}</b></p>
+      </ng-container>
+      <ng-container *ngIf="data.translations && data.translations[0] && data.translations[0].remarks"><div>{{ data.translations[0].remarks }}</div></ng-container>
+      <button mat-button color="primary" (click)="applyLoan()">{{ 'common.label.apply_now' | translate | uppercase }}</button>
+    </div>
+  </div>
+</div>
+<div class="package-banner"><ng-container *ngIf="data.applied && data.applied > 0"><div>{{ data.applied }}{{ 'common.label.space' | translate }}{{ 'common.label.applied' | translate | uppercase }}</div></ng-container></div>
+<div class="package-description">
+  <ng-container *ngIf="data.translations && data.translations[0] && data.translations[0].termAndCondition">
+    <h1>{{ 'common.label.term&condition' | translate }}</h1>
+    <div>{{ data.translations[0].termAndCondition }}</div>
+  </ng-container>
+  <ng-container *ngIf="data.packageDetails && data.packageDetails.length > 0">
+    <div *ngFor="let packageDetail of data.packageDetails">
+      <h2>{{ packageDetail.section.name }}{{ 'common.label.colon' | translate }}</h2>
+      <ul>
+        <li *ngFor="let detail of packageDetail.details">
+          {{ detail.name }}
+          <ng-container *ngIf="detail.childs && detail.childs.length > 0">
+            <ol>
+              <li *ngFor="let child of detail.childs">{{ child.name }}</li>
+            </ol>
+          </ng-container>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+  <br />
+  <div style="text-align: center;">
+    <button mat-raised-button color="primary" (click)="applyLoan()">{{ 'common.label.apply_now' | translate | uppercase }}</button>
+  </div>
+</div>
